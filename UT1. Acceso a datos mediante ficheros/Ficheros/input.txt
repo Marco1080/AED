@@ -1,0 +1,10 @@
+1, Juan , García López , 25, 600123456 
+9, María , Pérez Rodríguez , 30, 650987654 
+7, Luis , Fernández Gómez , 28, 620456789 
+6, Ana , Morales Díaz , 22, 670789123 
+5, Carlos , Martínez Torres , 35, 630123789 
+4, Laura , Sánchez Castro , 27, 610456123 
+3, Pedro , López Márquez , 40, 640987321 
+8, Elena , Jiménez Sánchez , 23, 680321654 
+2, Javier , González Fernández, 32, 690654321 
+10, Lucía , Ruiz Ortega , 29, 670123987 
