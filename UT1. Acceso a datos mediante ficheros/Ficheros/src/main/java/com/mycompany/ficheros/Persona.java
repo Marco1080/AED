@@ -9,14 +9,15 @@ package com.mycompany.ficheros;
  * @author 2damb
  */
 public class Persona {
-    String nombre, apellidos, telefono, id, edad;
+    String nombre, apellidos, telefono;
+    int id, edad;
 
-    public Persona(String nombre, String apellidos, String telefono, String id, String edad) {
-        this.nombre = ajustarFormato(nombre);
-        this.apellidos = ajustarFormato(apellidos);
-        this.telefono = ajustarFormato(telefono);
-        this.id = ajustarFormato(id);
-        this.edad = ajustarFormato(edad);
+    public Persona(String nombre, String apellidos, String telefono, int id, int edad) {
+        this.nombre = ajustarFormato(nombre, 10);
+        this.apellidos = ajustarFormato(apellidos, 20);
+        this.telefono = ajustarFormato(telefono, 20);
+        this.id = id;
+        this.edad = edad;
     }
 
     public String getNombre() {
@@ -43,21 +44,24 @@ public class Persona {
         this.telefono = telefono;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getEdad() {
+    public int getEdad() {
         return edad;
     }
 
-    public void setEdad(String edad) {
+    public void setEdad(int edad) {
         this.edad = edad;
     }
+
+    
+    
     
     @Override
     public String toString() {
@@ -68,16 +72,15 @@ public class Persona {
                 + " EDAD:" + getEdad();
     }
     
-    public String ajustarFormato(String texto) {
+    public String ajustarFormato(String texto, int longitud) {
         
-        if (texto.length() > 20) {
-            System.out.println(texto.length());
+        if (texto.length() > longitud) {
+            return texto.substring(0, longitud);
         }
-        else if ( texto.length() < 20 ){
-            texto = String.format("%-20s", texto);
+        else if ( texto.length() < longitud ){
+            texto = String.format( "%-" + longitud + "s", texto );
             return texto;
         }
         return texto;
-        
     }
 }

@@ -29,15 +29,14 @@ public class Ficheros {
         String line;
         BufferedReader br = new BufferedReader(fr);
         
-        
         while ( ( line = br.readLine()) != null) {
             
             String[] datos = line.split(",");
             String nombre = datos[0].trim();
             String apellidos = datos[1].trim();
             String telefono = datos[4];
-            String id = datos[0];
-            String edad = datos[3].trim();
+            int id = Integer.parseInt(datos[0].trim());
+            int edad = Integer.parseInt(datos[3].trim());
             Persona persona = new Persona(nombre, apellidos, telefono, id, edad);
             listaPersonas.add(persona);
             
@@ -52,11 +51,11 @@ public class Ficheros {
         DataOutputStream dos = new DataOutputStream(fos);
         for (Persona persona : listaPersonas) {
             
-            dos.writeUTF(persona.getNombre());
-            dos.writeUTF(persona.getApellidos());
-            dos.writeUTF(persona.getTelefono());
-            dos.writeUTF(persona.getId());
-            dos.writeUTF(persona.getEdad());
+            dos.writeChars(persona.getNombre());
+            dos.writeChars(persona.getApellidos());
+            dos.writeChars(persona.getTelefono());
+            dos.writeInt(persona.getId());
+            dos.writeInt(persona.getEdad());
             
         }
         
@@ -66,9 +65,26 @@ public class Ficheros {
         //3. Ordenación de Registros y Escritura en un Nuevo Fichero
         FileInputStream fis = new FileInputStream("./ficheroData.dat");
         DataInputStream dis = new DataInputStream(fis);
-        
-        while( true ) {
-            System.out.println(dis.readUTF().trim());
+        /*
+        String i;
+        while (true) {
+            int id = dis.readInt();
+            String nombre = dis.readChar();
+            String telefono = dis.readChar();
+            
         }
+        /*
+        fis.close();
+        dis.close();
+        */
     }
+    /*
+    public static String getStringFromBytes(DataInput disInput, int numChars) throws IOException {
+        String output = "";
+        for (int i = 0; i < numChars; i++) {
+            output = output + disInput.readChar();
+        }       
+        return output;
+    }
+    */
 }
