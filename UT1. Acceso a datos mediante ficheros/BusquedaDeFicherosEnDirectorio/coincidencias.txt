@@ -1,0 +1,2 @@
+Se ha encontrado profesor en el fichero datos.txt en la linea 0
+Se ha encontrado malo en el fichero informacion.txt en la linea 2
