@@ -1,6 +1,10 @@
 package com.mycompany.tiendavideojuegos;
 
-public class Juego {
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+public class Juego implements Comparable<Juego> {
 
     private String nombre;
     private String plataforma;
@@ -18,7 +22,12 @@ public class Juego {
     private double metaScore;
     private double userScore;
 
-    public Juego(String nombre, String plataforma, String desarrollador, String genero, String numeroJugadores, String clasificacionEdad, String fechaLanzamiento, int criticasPositivas, int criticasNeutrales, int criticasNegativas, int resenasPositivas, int resenasNeutrales, int resenasNegativas, double metaScore, double userScore) {
+    public Juego(String nombre, String plataforma, String desarrollador, 
+            String genero, String numeroJugadores, String clasificacionEdad, 
+            String fechaLanzamiento, int criticasPositivas, int criticasNeutrales, 
+            int criticasNegativas, int resenasPositivas, int resenasNeutrales, 
+            int resenasNegativas, double metaScore, double userScore) {
+        
         this.nombre = ajustarCadena(nombre);
         this.plataforma = ajustarCadena(plataforma);
         this.desarrollador = ajustarCadena(desarrollador);
@@ -184,4 +193,18 @@ public class Juego {
                 + ", User Score=" + userScore
                 + '}';
     }
+
+    @Override
+    public int compareTo(Juego otroJuego) {
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy", java.util.Locale.ENGLISH);
+        try {
+            Date thisFecha = sdf.parse(this.fechaLanzamiento.trim());
+            Date otroFecha = sdf.parse(otroJuego.fechaLanzamiento.trim());
+            return thisFecha.compareTo(otroFecha);
+        } catch (ParseException e) {
+            System.out.println("Error al parsear la fecha: " + e.getMessage());
+            return 0;
+        }
+    }
+
 }
