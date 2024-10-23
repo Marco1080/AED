@@ -1,0 +1,4 @@
+com\mycompany\dao\DAO.class
+com\mycompany\dao\GenericDao.class
+com\mycompany\dao\AnimalDao.class
+com\mycompany\dao\Animal.class
