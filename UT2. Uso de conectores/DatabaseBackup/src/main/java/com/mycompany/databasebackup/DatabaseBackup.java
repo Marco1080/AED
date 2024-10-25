@@ -33,25 +33,27 @@ public class DatabaseBackup {
 
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/animales", "root", "");
-            String sql = "SELECT * FROM animal";
-            PreparedStatement preparedStmt = connection.prepareStatement(sql);
-            ResultSet rs = preparedStmt.executeQuery(sql);
-            String registro;
+            //String sql = "SELECT * FROM animal";
+            //PreparedStatement preparedStmt = connection.prepareStatement(sql);
+            //ResultSet rs = preparedStmt.executeQuery(sql);
+            //String registro;
             /*
             while(rs.next()){
                 System.out.println(rs.getString("nombre") + " " + rs.getString("nombre"));
             }*/
-
             DatabaseUtilities utilities = new DatabaseUtilities();
-            utilities.mapearTabla(rs.getMetaData());
+            String databaseName = "animales";
             String sqlTablas = "SHOW TABLES";
-            ResultSet rsSql = preparedStmt.executeQuery(sqlTablas);
-            String sqlData;
-
             PreparedStatement preparedStmtTablas = connection.prepareStatement(sqlTablas);
             ResultSet rsTablas = preparedStmtTablas.executeQuery();
-            System.out.println("Tablas de la base de datos:");
-            utilities.listarTablas(rsTablas);
+            for (String tableName : (utilities.listarTablas(rsTablas))) {
+                String sql1 = "SELECT * FROM " + tableName;
+                PreparedStatement preparedStmt1 = connection.prepareStatement(sql1);
+                ResultSet rs1 = preparedStmt1.executeQuery(sql1);
+                utilities.mapearTabla(rs1.getMetaData());
+            }
+
+            System.out.println("\nSE VAN A LISTAR LAS TABLAS");
 
         } catch (SQLException e) {
             System.out.println(e);
