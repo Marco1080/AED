@@ -38,8 +38,8 @@ public class DatabaseUtilities {
             System.out.println("");
             for (int i = 1; i <= numeroColumnas; i++) {
                 //System.out.print(data.getTableName(i));
-                System.out.print(data.getColumnName(i));
-                System.out.print(" " + data.getColumnTypeName(i) + "(" + data.getColumnDisplaySize(i) + ")" + " ");
+                //System.out.print(data.getColumnName(i));
+                //System.out.print(" " + data.getColumnTypeName(i) + "(" + data.getColumnDisplaySize(i) + ")" + " ");
             }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseUtilities.class.getName()).log(Level.SEVERE, null, ex);
@@ -60,19 +60,9 @@ public class DatabaseUtilities {
             }
             sqlCreateTable += " );";
             System.out.println(sqlCreateTable);
-            //PreparedStatement ps = connection.prepareStatement(sqlCreateTable);
+            PreparedStatement ps = connection.prepareStatement(sqlCreateTable);
+            ps.executeUpdate();
 
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseUtilities.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        try {
-            int numeroColumnas = data.getColumnCount();
-            System.out.println("");
-            for (int i = 1; i <= numeroColumnas; i++) {
-                System.out.print("Nombre de la tabla: " + data.getTableName(i));
-                //System.out.print(data.getColumnName(i));
-                System.out.print(" " + data.getColumnTypeName(i) + "(" + data.getColumnDisplaySize(i) + ")" + " ");
-            }
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseUtilities.class.getName()).log(Level.SEVERE, null, ex);
         }

@@ -50,12 +50,9 @@ public class DatabaseBackup {
                 String sql1 = "SELECT * FROM " + tableName;
                 PreparedStatement preparedStmt1 = connection.prepareStatement(sql1);
                 ResultSet rs1 = preparedStmt1.executeQuery(sql1);
-                utilities.mapearTabla(rs1.getMetaData());
-                System.out.println("WIIIIIIIIIIIIIIIIIII<-----");
+                //utilities.mapearTabla(rs1.getMetaData());
                 utilities.generarBackUp(connection, rs1.getMetaData());
             }
-            
-            System.out.println("\nSE VAN A LISTAR LAS TABLAS");
 
         } catch (SQLException e) {
             System.out.println(e);
