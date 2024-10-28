@@ -49,22 +49,25 @@ public class DatabaseUtilities {
     public static void generarBackUp(Connection connection, ResultSetMetaData data) {
         try {
             String nuevaTabla = data.getTableName(1) + "New";
-            String sqlCreateTable = "CREATE TABLE " + nuevaTabla + " (";
-            
+            String sqlCreateTable = "CREATE TABLE IF NOT EXISTS " + nuevaTabla + " (";
+
             int numeroColumnas = data.getColumnCount();
             for (int i = 1; i <= numeroColumnas; i++) {
-                sqlCreateTable += data.getColumnName(i) 
-                        + " " + data.getColumnTypeName(i) 
-                        + "("+ data.getColumnDisplaySize(i) +")";
-                if( (i <= numeroColumnas -1)) {sqlCreateTable += ",";}
+                sqlCreateTable += data.getColumnName(i)
+                        + " " + data.getColumnTypeName(i)
+                        + "(" + data.getColumnDisplaySize(i) + ")";
+                if ((i <= numeroColumnas - 1)) {
+                    sqlCreateTable += ",";
+                }
             }
             sqlCreateTable += " );";
             System.out.println(sqlCreateTable);
-            PreparedStatement ps = connection.prepareStatement(sqlCreateTable);
-            ps.executeUpdate();
+            //PreparedStatement ps = connection.prepareStatement(sqlCreateTable);
+            //ps.executeUpdate();
 
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseUtilities.class.getName()).log(Level.SEVERE, null, ex);
+//        }
         }
     }
 }
