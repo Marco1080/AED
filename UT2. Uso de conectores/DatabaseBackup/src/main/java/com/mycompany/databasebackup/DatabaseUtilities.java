@@ -48,26 +48,51 @@ public class DatabaseUtilities {
 
     public static void generarBackUp(Connection connection, ResultSetMetaData data) {
         try {
-            String nuevaTabla = data.getTableName(1) + "New";
+            String nuevaTabla = data.getTableName(1) + "new";
             String sqlCreateTable = "CREATE TABLE IF NOT EXISTS " + nuevaTabla + " (";
 
             int numeroColumnas = data.getColumnCount();
             for (int i = 1; i <= numeroColumnas; i++) {
                 sqlCreateTable += data.getColumnName(i)
-                        + " " + data.getColumnTypeName(i)
-                        + "(" + data.getColumnDisplaySize(i) + ")";
+                        + " " + data.getColumnTypeName(i);
+                if (data.getColumnTypeName(i) != "INT UNSIGNED") {
+                    sqlCreateTable += "(" + data.getColumnDisplaySize(i) + ")";
+                }
                 if ((i <= numeroColumnas - 1)) {
                     sqlCreateTable += ",";
                 }
             }
             sqlCreateTable += " );";
-            System.out.println(sqlCreateTable);
+            //System.out.println(sqlCreateTable);
             //PreparedStatement ps = connection.prepareStatement(sqlCreateTable);
             //ps.executeUpdate();
+            guardarCopiaRegistros(connection, data.getTableName(1));
 
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseUtilities.class.getName()).log(Level.SEVERE, null, ex);
 //        }
         }
+    }
+
+    public static void guardarCopiaRegistros(Connection connection, String tabla) {
+        String sqlTabla = "SELECT * FROM " + tabla;
+        try {
+            PreparedStatement ps = connection.prepareStatement(sqlTabla);
+            ResultSet registros = ps.executeQuery();
+            int numeroColumnas = registros.getMetaData().getColumnCount();
+            int columnaActual = 1;
+            while (registros.next()) {
+                System.out.println("Nombre columna: " + registros.getMetaData().getColumnLabel(columnaActual));
+                columnaActual++;
+                if ( columnaActual == numeroColumnas) {
+                    columnaActual = 1;
+                }
+            }
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseUtilities.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
     }
 }
