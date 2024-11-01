@@ -21,26 +21,9 @@ public class DatabaseBackup {
     public static void main(String[] args) throws ClassNotFoundException {
         Connection connection = null;
         try {
-            /*
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/animales", "root", "");
-            String sql = "INSERT INTO animal (nombre, especie) VALUES (?, ?)";
-            PreparedStatement preparedStmt = connection.prepareStatement(sql);
-            preparedStmt.setString(1, "ErGato");
-            preparedStmt.setString(2, "Gato");
-            preparedStmt.execute();
-            connection.close();*/
 
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/animales", "root", "");
-            //String sql = "SELECT * FROM animal";
-            //PreparedStatement preparedStmt = connection.prepareStatement(sql);
-            //ResultSet rs = preparedStmt.executeQuery(sql);
-            //String registro;
-            /*
-            while(rs.next()){
-                System.out.println(rs.getString("nombre") + " " + rs.getString("nombre"));
-            }*/
             DatabaseUtilities utilities = new DatabaseUtilities();
             String databaseName = "animales";
             String sqlTablas = "SHOW TABLES";

@@ -1,4 +1,4 @@
-ut2jdbc\EjemploResultsetmetadata.class
 com\mycompany\databasebackup\DatabaseUtilities.class
-ut2jdbc\EjemploDatabaseMetadata.class
+com\mycompany\databasebackup\EjemploDatabaseMetadata.class
+com\mycompany\databasebackup\EjemploResultsetmetadata.class
 com\mycompany\databasebackup\DatabaseBackup.class

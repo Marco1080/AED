@@ -1,4 +1,4 @@
-package ut2jdbc;
+package com.mycompany.databasebackup;
 import java.sql.*;
 public class EjemploDatabaseMetadata {
 	public static void main(String[] args) {

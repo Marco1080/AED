@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.databasebackup;
 
 import java.sql.Connection;
@@ -13,10 +9,6 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author 2damb
- */
 public class DatabaseUtilities {
 
     public static ArrayList<String> listarTablas(ResultSet data) {
@@ -32,67 +24,52 @@ public class DatabaseUtilities {
         }
     }
 
-    public static void mapearTabla(ResultSetMetaData data) {
-        try {
-            int numeroColumnas = data.getColumnCount();
-            System.out.println("");
-            for (int i = 1; i <= numeroColumnas; i++) {
-                //System.out.print(data.getTableName(i));
-                //System.out.print(data.getColumnName(i));
-                //System.out.print(" " + data.getColumnTypeName(i) + "(" + data.getColumnDisplaySize(i) + ")" + " ");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(DatabaseUtilities.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-
     public static void generarBackUp(Connection connection, ResultSetMetaData data) {
         try {
             String nuevaTabla = data.getTableName(1) + "new";
             String sqlCreateTable = "CREATE TABLE IF NOT EXISTS " + nuevaTabla + " (";
-
             int numeroColumnas = data.getColumnCount();
             for (int i = 1; i <= numeroColumnas; i++) {
-                sqlCreateTable += data.getColumnName(i)
-                        + " " + data.getColumnTypeName(i);
-                if (data.getColumnTypeName(i) != "INT UNSIGNED") {
+                sqlCreateTable += data.getColumnName(i) + " " + data.getColumnTypeName(i);
+                if (!data.getColumnTypeName(i).equals("INT UNSIGNED")) {
                     sqlCreateTable += "(" + data.getColumnDisplaySize(i) + ")";
                 }
-                if ((i <= numeroColumnas - 1)) {
+                if (i < numeroColumnas) {
                     sqlCreateTable += ",";
                 }
             }
-            sqlCreateTable += " );";
-            //System.out.println(sqlCreateTable);
-            //PreparedStatement ps = connection.prepareStatement(sqlCreateTable);
-            //ps.executeUpdate();
-            guardarCopiaRegistros(connection, data.getTableName(1));
-
+            sqlCreateTable += ");";
+            PreparedStatement psCreate = connection.prepareStatement(sqlCreateTable);
+            psCreate.executeUpdate();
+            guardarCopiaRegistros(connection, data.getTableName(1), nuevaTabla);
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseUtilities.class.getName()).log(Level.SEVERE, null, ex);
-//        }
         }
     }
 
-    public static void guardarCopiaRegistros(Connection connection, String tabla) {
-        String sqlTabla = "SELECT * FROM " + tabla;
+    public static void guardarCopiaRegistros(Connection connection, String tabla, String nuevaTabla) {
+        String sqlSelect = "SELECT * FROM " + tabla;
         try {
-            PreparedStatement ps = connection.prepareStatement(sqlTabla);
-            ResultSet registros = ps.executeQuery();
+            PreparedStatement psSelect = connection.prepareStatement(sqlSelect);
+            ResultSet registros = psSelect.executeQuery();
             int numeroColumnas = registros.getMetaData().getColumnCount();
-            int columnaActual = 1;
             while (registros.next()) {
-                System.out.println("Nombre columna: " + registros.getMetaData().getColumnLabel(columnaActual));
-                columnaActual++;
-                if ( columnaActual == numeroColumnas) {
-                    columnaActual = 1;
+                StringBuilder sqlInsert = new StringBuilder("INSERT INTO " + nuevaTabla + " VALUES(");
+                for (int i = 1; i <= numeroColumnas; i++) {
+                    sqlInsert.append("?");
+                    if (i < numeroColumnas) {
+                        sqlInsert.append(",");
+                    }
                 }
+                sqlInsert.append(");");
+                PreparedStatement psInsert = connection.prepareStatement(sqlInsert.toString());
+                for (int i = 1; i <= numeroColumnas; i++) {
+                    psInsert.setObject(i, registros.getObject(i));
+                }
+                psInsert.executeUpdate();
             }
-            
-            
         } catch (SQLException ex) {
             Logger.getLogger(DatabaseUtilities.class.getName()).log(Level.SEVERE, null, ex);
         }
-
     }
 }
