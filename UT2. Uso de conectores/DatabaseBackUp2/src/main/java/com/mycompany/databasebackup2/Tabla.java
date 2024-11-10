@@ -13,4 +13,10 @@ import java.util.ArrayList;
 public class Tabla {
     String nombre;
     ArrayList<Campo> listaCampos;
+
+    public Tabla(String nombre, ArrayList<Campo> listaCampos) {
+        this.nombre = nombre;
+        this.listaCampos = listaCampos;
+    }
+    
 }

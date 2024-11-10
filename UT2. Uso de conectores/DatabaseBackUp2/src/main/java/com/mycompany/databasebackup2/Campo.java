@@ -12,4 +12,11 @@ public class Campo {
     String nombre;
     String tipo;
     int longitud;
+
+    public Campo(String nombre, String tipo, int longitud) {
+        this.nombre = nombre;
+        this.tipo = tipo;
+        this.longitud = longitud;
+    }
+    
 }

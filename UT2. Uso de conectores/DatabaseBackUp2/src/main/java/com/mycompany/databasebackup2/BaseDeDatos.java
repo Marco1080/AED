@@ -13,4 +13,9 @@ import java.util.ArrayList;
 public class BaseDeDatos {
     String nombre;
     ArrayList<Tabla> listaTablas;
+
+    public BaseDeDatos(String nombre) {
+        this.nombre = nombre;
+    }
+    
 }

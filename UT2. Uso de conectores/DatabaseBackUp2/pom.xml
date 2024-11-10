@@ -11,4 +11,12 @@
         <maven.compiler.target>22</maven.compiler.target>
         <exec.mainClass>com.mycompany.databasebackup2.DatabaseBackUp2</exec.mainClass>
     </properties>
+    <dependencies>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
+        </dependency>
+    </dependencies>
+
 </project>
