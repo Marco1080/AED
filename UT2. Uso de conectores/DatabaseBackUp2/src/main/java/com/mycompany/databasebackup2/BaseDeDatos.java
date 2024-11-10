@@ -14,8 +14,9 @@ public class BaseDeDatos {
     String nombre;
     ArrayList<Tabla> listaTablas;
 
-    public BaseDeDatos(String nombre) {
+    public BaseDeDatos(String nombre, ArrayList<Tabla> listaTablas) {
         this.nombre = nombre;
+        this.listaTablas = listaTablas;
     }
     
 }
