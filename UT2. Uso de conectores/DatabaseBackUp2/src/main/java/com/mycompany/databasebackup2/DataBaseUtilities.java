@@ -4,6 +4,7 @@
  */
 package com.mycompany.databasebackup2;
 
+import com.mysql.cj.xdevapi.DbDoc;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
@@ -65,8 +66,11 @@ public class DataBaseUtilities {
         try {
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306", "root", "");
+            String sqlDrop = "DROP DATABASE IF EXISTS " + dbName + ";";
+            PreparedStatement ps = connection.prepareStatement(sqlDrop);
+            ps.execute();
             String sql = "CREATE DATABASE IF NOT EXISTS " + dbName;
-            PreparedStatement ps = connection.prepareStatement(sql);
+            ps = connection.prepareStatement(sql);
             ps.execute();
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306" + "/" + dbName, "root", "");
@@ -169,4 +173,29 @@ public class DataBaseUtilities {
         insertSql.append(");");
         return insertSql.toString();
     }
+
+    public void compararBasesDeDatos(BaseDeDatos db) {
+        Connection connection = null;
+        try {
+            BaseDeDatos dbActual = mapearBaseDeDatos(db.nombre);
+
+            if (db.hashCode() == dbActual.hashCode()) {
+                System.out.println("Las bases de datos son iguales.");
+            } else {
+                System.out.println("Las bases de datos son diferentes.");
+            }
+
+        } catch (Exception ex) {
+            Logger.getLogger(DataBaseUtilities.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(DataBaseUtilities.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+
 }

@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * @author 2damb
  */
 public class BaseDeDatos {
+
     String nombre;
     ArrayList<Tabla> listaTablas;
 
@@ -18,5 +19,12 @@ public class BaseDeDatos {
         this.nombre = nombre;
         this.listaTablas = listaTablas;
     }
-    
+
+    @Override
+    public int hashCode() {
+        int result = nombre.hashCode();
+        result = 31 * result + listaTablas.hashCode();
+        return result;
+    }
+
 }
