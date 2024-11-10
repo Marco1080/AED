@@ -10,7 +10,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,12 +20,12 @@ import java.util.logging.Logger;
  */
 public class DataBaseUtilities {
 
-    public BaseDeDatos mapearBaseDeDatos() {
+    public BaseDeDatos mapearBaseDeDatos(String dbName) {
         ArrayList<Tabla> listaTablas = new ArrayList<Tabla>();
         Connection connection = null;
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/animales", "root", "");
+                    "jdbc:mysql://localhost:3306/" + dbName, "root", "");
             DatabaseMetaData metaData = connection.getMetaData();
             ResultSet rs = metaData.getTables("animales", null, "%", new String[]{"TABLE"});
             while (rs.next()) {
@@ -67,7 +66,6 @@ public class DataBaseUtilities {
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306", "root", "");
             String sql = "CREATE DATABASE IF NOT EXISTS " + dbName;
-            System.out.println(dbName);
             PreparedStatement ps = connection.prepareStatement(sql);
             ps.execute();
             connection = DriverManager.getConnection(
@@ -106,5 +104,69 @@ public class DataBaseUtilities {
                 }
             }
         }
+    }
+
+    public void copiarRegistro(BaseDeDatos db) {
+        Connection connection = null;
+
+        for (Tabla tabla : db.listaTablas) {
+            String sql = "SELECT * FROM " + tabla.nombre;
+            try {
+                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + db.nombre, "root", "");
+                PreparedStatement ps = connection.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery();
+                connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/" + db.nombre + "new", "root", "");
+                while (rs.next()) {
+                    ArrayList<String> registros = new ArrayList<String>();
+                    for (Campo c : tabla.listaCampos) {
+                        registros.add(rs.getString(c.nombre));
+                    }
+                    String insertSql = insertData(tabla, registros);
+                    PreparedStatement insertStatement = connection.prepareStatement(insertSql);
+                    insertStatement.execute();
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(DataBaseUtilities.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                if (connection != null) {
+                    try {
+                        connection.close();
+                    } catch (SQLException ex) {
+                        Logger.getLogger(DataBaseUtilities.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    private String insertData(Tabla tabla, ArrayList<String> registros) {
+        StringBuilder insertSql = new StringBuilder("INSERT INTO ");
+        insertSql.append(tabla.nombre).append(" (");
+
+        for (int i = 0; i < tabla.listaCampos.size(); i++) {
+            insertSql.append(tabla.listaCampos.get(i).nombre);
+            if (i < tabla.listaCampos.size() - 1) {
+                insertSql.append(", ");
+            }
+        }
+
+        insertSql.append(") VALUES (");
+
+        for (int i = 0; i < registros.size(); i++) {
+            String valor = registros.get(i);
+            if (valor == null) {
+                insertSql.append("null");
+            } else {
+                insertSql.append("'").append(valor.replace("'", "\\'")).append("'");
+            }
+            if (i < registros.size() - 1) {
+                insertSql.append(", ");
+            }
+        }
+
+        insertSql.append(");");
+        return insertSql.toString();
     }
 }
