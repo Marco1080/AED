@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <!-- Configuración de conexión -->
+        <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/futbol</property> <!-- Cambia la URL según tu configuración -->
+        <property name="hibernate.connection.username">root</property> <!-- Usuario de la base de datos -->
+        <property name="hibernate.connection.password"></property> <!-- Contraseña de la base de datos -->
+
+        <!-- Configuración del dialecto de la base de datos -->
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQL8Dialect</property>
+
+        <!-- Mostrar las consultas SQL en la consola -->
+        <property name="hibernate.show_sql">true</property>
+
+        <!-- Crear, actualizar o validar las tablas -->
+        <property name="hibernate.hbm2ddl.auto">update</property> <!-- Cambia 'create' a 'update' si no quieres borrar los datos existentes -->
+
+        <!-- Otras configuraciones de Hibernate -->
+        <property name="hibernate.c3p0.min_size">5</property>
+        <property name="hibernate.c3p0.max_size">20</property>
+
+        <!-- Mapear las clases -->
+        <mapping class="com.mycompany.futbolhibernate.Usuario"/> <!-- Cambia el paquete según tu configuración -->
+    </session-factory>
+</hibernate-configuration>
