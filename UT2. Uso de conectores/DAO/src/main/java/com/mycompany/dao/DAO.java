@@ -11,14 +11,10 @@ package com.mycompany.dao;
 public class DAO {
 
     public static void main(String[] args) {
-        System.out.println("Iniciando programa...");
         
         AnimalDao animalDao = new AnimalDao();
-        System.out.println("Conectando a la base de datos...");
 
         Animal gatito = new Animal(1,"Gatito", "Gato");
-        System.out.println("Creando objeto Animal...");
-
         int resultado = animalDao.add(gatito);
         System.out.println("Resultado de la inserción: " + resultado);
         
