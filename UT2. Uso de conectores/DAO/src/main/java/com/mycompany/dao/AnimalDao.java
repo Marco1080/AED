@@ -13,10 +13,12 @@ import java.sql.SQLException;
  *
  * @author tonyi
  */
-public class AnimalDao implements GenericDao<Animal, Integer>{    
+public class AnimalDao implements GenericDao<Animal, Integer> {
+
     private Connection connection;
+
     public AnimalDao() {
-        
+
         try {
             this.connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/animales", "root", "");
@@ -25,10 +27,10 @@ public class AnimalDao implements GenericDao<Animal, Integer>{
             e.printStackTrace();
         }
     }
-    
+
     @Override
     public int add(Animal animal) {
-     String sql = "INSERT INTO Animal (nombre, especie) VALUES (?, ?)";
+        String sql = "INSERT INTO Animal (nombre, especie) VALUES (?, ?)";
         try (PreparedStatement stmt = connection.prepareStatement(sql)) {
             stmt.setString(1, animal.getNombre());
             stmt.setString(2, animal.getEspecie());
@@ -40,17 +42,47 @@ public class AnimalDao implements GenericDao<Animal, Integer>{
     }
 
     @Override
-    public int update(Animal entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public int update(Animal animal) {
+        String sql = "UPDATE Animal SET nombre = ?, especie = ? WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setString(1, animal.getNombre());
+            stmt.setString(2, animal.getEspecie());
+            stmt.setInt(3, animal.getId());
+            return stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     @Override
-    public int delete(Animal entity) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    public int delete(Animal animal) {
+        String sql = "DELETE FROM Animal WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, animal.getId());
+            return stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     @Override
     public Animal getbById(Integer id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "SELECT * FROM Animal WHERE id = ?";
+        try (PreparedStatement stmt = connection.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            var resultSet = stmt.executeQuery();
+            if (resultSet.next()) {
+                String nombre = resultSet.getString("nombre");
+                String especie = resultSet.getString("especie");
+                Animal animal = new Animal(id, nombre, especie);
+                return animal;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
+
 }
