@@ -13,7 +13,7 @@ public class Match {
 
     @ManyToOne
     @JoinColumn(name = "division_id", nullable = false)
-    private Division division;
+    private String division;
 
     @Temporal(TemporalType.DATE)
     private Date matchDate;
@@ -26,13 +26,11 @@ public class Match {
 
     private double ftag; // Goles del equipo visitante
 
-    private String ftr; // Resultado final
+    private double ftr; // Resultado final
 
     private int season;
 
-    public Match() {}
-
-    public Match(Division division, Date matchDate, String homeTeam, String awayTeam, double fthg, double ftag, String ftr, int season) {
+    public Match(String division, Date matchDate, String homeTeam, String awayTeam, double fthg, double ftag, Double ftr, int season) {
         this.division = division;
         this.matchDate = matchDate;
         this.homeTeam = homeTeam;
@@ -43,6 +41,9 @@ public class Match {
         this.season = season;
     }
 
+    public Match() {
+    }
+
     public int getId() {
         return id;
     }
@@ -51,11 +52,11 @@ public class Match {
         this.id = id;
     }
 
-    public Division getDivision() {
+    public String getDivision() {
         return division;
     }
 
-    public void setDivision(Division division) {
+    public void setDivision(String division) {
         this.division = division;
     }
 
@@ -99,11 +100,11 @@ public class Match {
         this.ftag = ftag;
     }
 
-    public String getFtr() {
+    public double getFtr() {
         return ftr;
     }
 
-    public void setFtr(String ftr) {
+    public void setFtr(double ftr) {
         this.ftr = ftr;
     }
 
@@ -114,13 +115,13 @@ public class Match {
     public void setSeason(int season) {
         this.season = season;
     }
-
+    /*
     @Override
     public String toString() {
-        return "Match{id=" + id + ", division=" + division.getNombre()+
-               ", matchDate=" + matchDate + ", homeTeam='" + homeTeam + '\'' +
-               ", awayTeam='" + awayTeam + '\'' + ", fthg=" + fthg +
-               ", ftag=" + ftag + ", ftr='" + ftr + '\'' +
-               ", season=" + season + '}';
-    }
+        return "Match{id=" + id + ", division=" + division.getDivision()
+                + ", matchDate=" + matchDate + ", homeTeam='" + homeTeam + '\''
+                + ", awayTeam='" + awayTeam + '\'' + ", fthg=" + fthg
+                + ", ftag=" + ftag + ", ftr='" + ftr + '\''
+                + ", season=" + season + '}';
+    }*/
 }
