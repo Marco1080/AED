@@ -23,5 +23,7 @@
 
         <!-- Mapear las clases -->
         <mapping class="com.mycompany.futbolhibernate.Usuario"/> <!-- Cambia el paquete según tu configuración -->
+        <mapping class="com.mycompany.futbolhibernate.Division"/>
+        <mapping class="com.mycompany.futbolhibernate.Match"/>
     </session-factory>
 </hibernate-configuration>

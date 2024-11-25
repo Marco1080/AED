@@ -10,10 +10,13 @@ import org.hibernate.cfg.Configuration;
 public class FutbolHibernate {
 
     public static void main(String[] args) {
-        /*
+
         Configuration configuration = new Configuration();
         configuration.configure("/hibernate.cfg.xml");
         configuration.addAnnotatedClass(Usuario.class);
+
+        configuration.addAnnotatedClass(Match.class);
+        configuration.addAnnotatedClass(Division.class);
 
         try (SessionFactory sessionFactory = configuration.buildSessionFactory(); Session session = sessionFactory.openSession()) {
 
@@ -28,7 +31,8 @@ public class FutbolHibernate {
             System.out.println("Usuario guardado con éxito: " + usuario);
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
+        }
+        /*
         Scanner scan = new Scanner(System.in);
         boolean another = true;
         do {
@@ -43,7 +47,7 @@ public class FutbolHibernate {
                     + "\n8 - Eliminar equipo."
                     + "\n9 - Eliminar division."
                     + "\n9 - Generar datos de prueba."
-                    + "\n0 -  Salir.\n");
+                    + "\n0 - Salir.\n");
             int option = scan.nextInt();
             switch (option) {
                 case 1:
@@ -94,5 +98,6 @@ public class FutbolHibernate {
         } while (another);
         //session.close();
         System.out.println("Has salido del menu.");
+         */
     }
 }

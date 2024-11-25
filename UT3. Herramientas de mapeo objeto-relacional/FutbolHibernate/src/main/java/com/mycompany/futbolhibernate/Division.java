@@ -1,47 +1,65 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.futbolhibernate;
 
-/**
- *
- * @author tonyi
- */
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity
+@Table(name = "divisions")
 public class Division {
 
-    String division;
-    String name;
-    String country;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    public Division(String division, String name, String country) {
-        this.division = division;
-        this.name = name;
-        this.country = country;
+    private String nombre;
+
+    private String pais;
+
+    @OneToMany(mappedBy = "division", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Match> partidos = new ArrayList<>();
+
+    public Division() {}
+
+    public Division(String nombre, String pais) {
+        this.nombre = nombre;
+        this.pais = pais;
     }
 
-    public String getDivision() {
-        return division;
+    public int getId() {
+        return id;
     }
 
-    public void setDivision(String division) {
-        this.division = division;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public String getName() {
-        return name;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getCountry() {
-        return country;
+    public String getPais() {
+        return pais;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setPais(String pais) {
+        this.pais = pais;
     }
 
+    public List<Match> getPartidos() {
+        return partidos;
+    }
+
+    public void setPartidos(List<Match> partidos) {
+        this.partidos = partidos;
+    }
+
+    @Override
+    public String toString() {
+        return "Division{id=" + id + ", nombre='" + nombre + '\'' + ", pais='" + pais + '\'' + '}';
+    }
 }

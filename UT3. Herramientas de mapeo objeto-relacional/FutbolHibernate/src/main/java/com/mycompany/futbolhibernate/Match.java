@@ -1,36 +1,45 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.futbolhibernate;
 
+import jakarta.persistence.*;
 import java.util.Date;
 
-/**
- *
- * @author tonyi
- */
+@Entity
+@Table(name = "matchs")
 public class Match {
 
-    int id;
-    String division;
-    Date match_date;
-    String HomeTeam;
-    String AwayTeam;
-    double FTHG;
-    double FTAG;
-    String FTR;
-    int season;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    public Match(int id, String division, Date match_date, String HomeTeam, String AwayTeam, double FTHG, double FTAG, String FTR, int season) {
-        this.id = id;
+    @ManyToOne
+    @JoinColumn(name = "division_id", nullable = false)
+    private Division division;
+
+    @Temporal(TemporalType.DATE)
+    private Date matchDate;
+
+    private String homeTeam;
+
+    private String awayTeam;
+
+    private double fthg; // Goles del equipo local
+
+    private double ftag; // Goles del equipo visitante
+
+    private String ftr; // Resultado final
+
+    private int season;
+
+    public Match() {}
+
+    public Match(Division division, Date matchDate, String homeTeam, String awayTeam, double fthg, double ftag, String ftr, int season) {
         this.division = division;
-        this.match_date = match_date;
-        this.HomeTeam = HomeTeam;
-        this.AwayTeam = AwayTeam;
-        this.FTHG = FTHG;
-        this.FTAG = FTAG;
-        this.FTR = FTR;
+        this.matchDate = matchDate;
+        this.homeTeam = homeTeam;
+        this.awayTeam = awayTeam;
+        this.fthg = fthg;
+        this.ftag = ftag;
+        this.ftr = ftr;
         this.season = season;
     }
 
@@ -42,60 +51,60 @@ public class Match {
         this.id = id;
     }
 
-    public String getDivision() {
+    public Division getDivision() {
         return division;
     }
 
-    public void setDivision(String division) {
+    public void setDivision(Division division) {
         this.division = division;
     }
 
-    public Date getMatch_date() {
-        return match_date;
+    public Date getMatchDate() {
+        return matchDate;
     }
 
-    public void setMatch_date(Date match_date) {
-        this.match_date = match_date;
+    public void setMatchDate(Date matchDate) {
+        this.matchDate = matchDate;
     }
 
     public String getHomeTeam() {
-        return HomeTeam;
+        return homeTeam;
     }
 
-    public void setHomeTeam(String HomeTeam) {
-        this.HomeTeam = HomeTeam;
+    public void setHomeTeam(String homeTeam) {
+        this.homeTeam = homeTeam;
     }
 
     public String getAwayTeam() {
-        return AwayTeam;
+        return awayTeam;
     }
 
-    public void setAwayTeam(String AwayTeam) {
-        this.AwayTeam = AwayTeam;
+    public void setAwayTeam(String awayTeam) {
+        this.awayTeam = awayTeam;
     }
 
-    public double getFTHG() {
-        return FTHG;
+    public double getFthg() {
+        return fthg;
     }
 
-    public void setFTHG(double FTHG) {
-        this.FTHG = FTHG;
+    public void setFthg(double fthg) {
+        this.fthg = fthg;
     }
 
-    public double getFTAG() {
-        return FTAG;
+    public double getFtag() {
+        return ftag;
     }
 
-    public void setFTAG(double FTAG) {
-        this.FTAG = FTAG;
+    public void setFtag(double ftag) {
+        this.ftag = ftag;
     }
 
-    public String getFTR() {
-        return FTR;
+    public String getFtr() {
+        return ftr;
     }
 
-    public void setFTR(String FTR) {
-        this.FTR = FTR;
+    public void setFtr(String ftr) {
+        this.ftr = ftr;
     }
 
     public int getSeason() {
@@ -106,4 +115,12 @@ public class Match {
         this.season = season;
     }
 
+    @Override
+    public String toString() {
+        return "Match{id=" + id + ", division=" + division.getNombre()+
+               ", matchDate=" + matchDate + ", homeTeam='" + homeTeam + '\'' +
+               ", awayTeam='" + awayTeam + '\'' + ", fthg=" + fthg +
+               ", ftag=" + ftag + ", ftr='" + ftr + '\'' +
+               ", season=" + season + '}';
+    }
 }
