@@ -13,7 +13,7 @@ public class Match {
 
     @ManyToOne
     @JoinColumn(name = "division_id", nullable = false)
-    private String division;
+    private Division division;
 
     @Temporal(TemporalType.DATE)
     private Date matchDate;
@@ -22,15 +22,15 @@ public class Match {
 
     private String awayTeam;
 
-    private double fthg; // Goles del equipo local
+    private double fthg;
 
-    private double ftag; // Goles del equipo visitante
+    private double ftag;
 
-    private double ftr; // Resultado final
+    private double ftr;
 
     private int season;
 
-    public Match(String division, Date matchDate, String homeTeam, String awayTeam, double fthg, double ftag, Double ftr, int season) {
+    public Match(Division division, Date matchDate, String homeTeam, String awayTeam, double fthg, double ftag, Double ftr, int season) {
         this.division = division;
         this.matchDate = matchDate;
         this.homeTeam = homeTeam;
@@ -52,11 +52,11 @@ public class Match {
         this.id = id;
     }
 
-    public String getDivision() {
+    public Division getDivision() {
         return division;
     }
 
-    public void setDivision(String division) {
+    public void setDivision(Division division) {
         this.division = division;
     }
 

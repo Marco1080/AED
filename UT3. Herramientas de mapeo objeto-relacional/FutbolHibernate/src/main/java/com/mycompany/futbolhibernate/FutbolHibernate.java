@@ -16,17 +16,17 @@ public class FutbolHibernate {
         Configuration configuration = new Configuration();
         configuration.configure("/hibernate.cfg.xml");
 
-        //configuration.addAnnotatedClass(Usuario.class);
-        configuration.addAnnotatedClass(Match.class);
+        configuration.addAnnotatedClass(Usuario.class);
         configuration.addAnnotatedClass(Division.class);
+        configuration.addAnnotatedClass(Match.class);
         /*
         try (SessionFactory sessionFactory = configuration.buildSessionFactory(); Session session = sessionFactory.openSession()) {
 
-            Transaction transaction = session.beginTransaction();
+            //Transaction transaction = session.beginTransaction();
 
-            Usuario usuario = new Usuario("Juan Mastonte", "mastonte@dolor.com");
+            //Usuario usuario = new Usuario("Juan Mastonte", "mastonte@dolor.com");
 
-            session.persist(usuario);
+            //session.persist(usuario);
 
             transaction.commit();
 
@@ -55,8 +55,6 @@ public class FutbolHibernate {
                 case 1:
                     break;
                 case 2:
-                    //System.out.println("Division:");
-                    //String division = scan.nextLine();
                     System.out.println("Nombre:");
                     String name = scan.nextLine();
                     System.out.println("Pais:");
@@ -65,13 +63,14 @@ public class FutbolHibernate {
 
                     break;
                 case 3:
+                    /*
                     System.out.println("Division:");
                     String division = scan.nextLine();
 
-                    //System.out.println("Fecha:");
-                    //String fecha = scan.nextLine();
-                    SimpleDateFormat fecha = new SimpleDateFormat("2000-01-12");
-
+                    System.out.println("Fecha:");
+                    String fecha = scan.nextLine();
+                    Date fecha = new Date("2000-01-12");
+                    
                     System.out.println("Equipo de casa:");
                     String homeTeam = scan.nextLine();
 
@@ -90,9 +89,26 @@ public class FutbolHibernate {
                     System.out.println("Temporada:");
                     int season = scan.nextInt();
                     
-                    Match nuevoMatch = new Match(division, fecha, homeTeam, awayTeam, fthg, ftag, ftr, season);
+                    Match nuevoMatch = new Match(division, null, homeTeam, awayTeam, fthg, ftag, ftr, season);
+                    session.persist(nuevoMatch);
+                    session.persist(nuevoMatch);
+                    transaction.commit();
+                     */
+                    try (SessionFactory sessionFactory = configuration.buildSessionFactory(); Session session = sessionFactory.openSession()) {
+                        Transaction transaction = session.beginTransaction();
+
+                        Usuario usuario = new Usuario("Tony", "tony@gmail.com");
+                        session.persist(usuario);
+                        //Division division, Date matchDate, String homeTeam, String awayTeam, double fthg, double ftag, Double ftr, int season) {
+
+                        Match nuevoMatch = new Match(null, null, "ESPAÑA", "Si", option, option, Double.NaN, option);
+                        session.persist(nuevoMatch);
+                        transaction.commit();
+                        System.out.println("Has guardado el nuevo usuario");
+                    }
+                    System.out.println("Se ha guardado el nuevo match.");
                     break;
-                    /*
+                /*
                     this.division = division;
                     this.matchDate = matchDate;
                     this.homeTeam = homeTeam;
@@ -101,7 +117,7 @@ public class FutbolHibernate {
                     this.ftag = ftag;
                     this.ftr = ftr;
                     this.season = season;
-                                */
+                 */
 
                 case 4:
                     break;

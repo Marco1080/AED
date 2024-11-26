@@ -1,4 +1,5 @@
 com\mycompany\futbolhibernate\Match.class
+com\mycompany\futbolhibernate\FutbolCrud.class
 com\mycompany\futbolhibernate\Usuario.class
 com\mycompany\futbolhibernate\FutbolHibernate.class
 com\mycompany\futbolhibernate\Division.class
