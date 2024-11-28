@@ -12,29 +12,33 @@ import org.hibernate.cfg.Configuration;
 public class FutbolHibernate {
 
     public static void main(String[] args) {
-
+        /*
         Configuration configuration = new Configuration();
         configuration.configure("/hibernate.cfg.xml");
 
         configuration.addAnnotatedClass(Usuario.class);
         configuration.addAnnotatedClass(Division.class);
         configuration.addAnnotatedClass(Match.class);
+        */
+        Session session = HibernateUtil.getSession();
+        session.beginTransaction();
+        
         /*
-        try (SessionFactory sessionFactory = configuration.buildSessionFactory(); Session session = sessionFactory.openSession()) {
+            Transaction transaction = session.beginTransaction();
 
-            //Transaction transaction = session.beginTransaction();
+            Usuario usuario = new Usuario("MarcoTest", "marco@gmail.com");
+            Division division = new Division("Primera", "España");
 
-            //Usuario usuario = new Usuario("Juan Mastonte", "mastonte@dolor.com");
-
-            //session.persist(usuario);
+            session.persist(usuario);
+            session.persist(division);
 
             transaction.commit();
 
             System.out.println("Usuario guardado con éxito: " + usuario);
         } catch (Exception e) {
             e.printStackTrace();
-        }*/
-
+        }
+        /*
         Scanner scan = new Scanner(System.in);
         boolean another = true;
         do {
@@ -93,7 +97,7 @@ public class FutbolHibernate {
                     session.persist(nuevoMatch);
                     session.persist(nuevoMatch);
                     transaction.commit();
-                     */
+                    
                     try (SessionFactory sessionFactory = configuration.buildSessionFactory(); Session session = sessionFactory.openSession()) {
                         Transaction transaction = session.beginTransaction();
 
@@ -117,7 +121,7 @@ public class FutbolHibernate {
                     this.ftag = ftag;
                     this.ftr = ftr;
                     this.season = season;
-                 */
+                
 
                 case 4:
                     break;
@@ -139,7 +143,8 @@ public class FutbolHibernate {
             }
         } while (another);
         //session.close();
+        
         System.out.println("Has salido del menu.");
-
+        */
     }
 }
