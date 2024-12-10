@@ -4,7 +4,7 @@
         <!-- Configuración JDBC -->
         <property name="hibernate.dialect">org.hibernate.dialect.MySQL57Dialect</property> <!-- Cambiar a MySQL57Dialect si usas MariaDB -->
         <property name="hibernate.connection.driver_class">com.mysql.cj.jdbc.Driver</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/futbol?createDatabaseIfNotExist=true</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/futbolNuevo?createDatabaseIfNotExist=true</property>
         <property name="hibernate.connection.username">root</property>
         <property name="hibernate.connection.password"></property>
 
@@ -17,14 +17,13 @@
         <property name="hibernate.show_sql">true</property>
 
         <!-- Configuración de la creación de tablas y el esquema de la base de datos -->
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.hbm2ddl.auto">create</property>
 
         <!-- Configuración del contexto de la sesión para evitar el error de "No CurrentSessionContext" -->
         <property name="hibernate.current_session_context_class">thread</property> <!-- Añadir esta línea -->
 
         <!-- Mapeo de las clases -->
-        <mapping class="com.mycompany.futbolhibernate.Usuario"/>
-        <mapping class="com.mycompany.futbolhibernate.Division"/>
-        <mapping class="com.mycompany.futbolhibernate.Match"/>
+        <mapping class="org.example.Division"/>
+        <mapping class="org.example.Match"/>
     </session-factory>
 </hibernate-configuration>

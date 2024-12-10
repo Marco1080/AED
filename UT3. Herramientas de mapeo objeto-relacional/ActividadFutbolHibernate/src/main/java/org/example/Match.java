@@ -1,7 +1,8 @@
-package com.mycompany.futbolhibernate;
+package org.example;
+
+import java.util.Date;
 
 import jakarta.persistence.*;
-import java.util.Date;
 
 @Entity
 @Table(name = "matchs")
@@ -29,8 +30,8 @@ public class Match {
     private double ftr;
 
     private int season;
-
-    public Match(Division division, Date matchDate, String homeTeam, String awayTeam, double fthg, double ftag, Double ftr, int season) {
+    public Match(){}
+    public Match(Division division, Date matchDate, String homeTeam, String awayTeam, double fthg, double ftag, double ftr, int season) {
         this.division = division;
         this.matchDate = matchDate;
         this.homeTeam = homeTeam;
@@ -39,9 +40,6 @@ public class Match {
         this.ftag = ftag;
         this.ftr = ftr;
         this.season = season;
-    }
-
-    public Match() {
     }
 
     public int getId() {
@@ -115,13 +113,4 @@ public class Match {
     public void setSeason(int season) {
         this.season = season;
     }
-    /*
-    @Override
-    public String toString() {
-        return "Match{id=" + id + ", division=" + division.getDivision()
-                + ", matchDate=" + matchDate + ", homeTeam='" + homeTeam + '\''
-                + ", awayTeam='" + awayTeam + '\'' + ", fthg=" + fthg
-                + ", ftag=" + ftag + ", ftr='" + ftr + '\''
-                + ", season=" + season + '}';
-    }*/
 }
