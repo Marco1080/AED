@@ -1,15 +1,9 @@
 package org.example;
 import jakarta.persistence.*;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
-import java.util.List;
 
 @Entity
 @Table(name = "divisions")
-
 public class Division {
 
     @Id
@@ -33,31 +27,6 @@ public class Division {
         this.name = name;
         this.country = country;
     }
-    public List<Division> getAllDivisions() {
-
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-
-        Session session = sessionFactory.openSession();
-        List<Division> divisions = null;
-
-        try {
-            session.beginTransaction();
-            Query<Division> query = session.createQuery("FROM Division", Division.class);
-            divisions = query.getResultList();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            if (session.getTransaction() != null) {
-                session.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-            sessionFactory.close();
-        }
-
-        return divisions;
-    }
-
 
     public String getDivision() {
         return division;
@@ -90,5 +59,4 @@ public class Division {
     public void setMatches(List<Match> matches) {
         this.matches = matches;
     }
-
 }
