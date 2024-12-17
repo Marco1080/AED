@@ -1,11 +1,6 @@
 package org.example;
 import jakarta.persistence.*;
 import java.util.List;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.cfg.Configuration;
-import org.hibernate.query.Query;
-import java.util.List;
 
 @Entity
 @Table(name = "divisions")
@@ -25,37 +20,12 @@ public class Division {
     @OneToMany(mappedBy = "division", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Match> matches;
 
-    // Constructores, getters y setters
     public Division() {}
 
     public Division(String division, String name, String country) {
         this.division = division;
         this.name = name;
         this.country = country;
-    }
-    public List<Division> getAllDivisions() {
-
-        SessionFactory sessionFactory = new Configuration().configure().buildSessionFactory();
-
-        Session session = sessionFactory.openSession();
-        List<Division> divisions = null;
-
-        try {
-            session.beginTransaction();
-            Query<Division> query = session.createQuery("FROM Division", Division.class);
-            divisions = query.getResultList();
-            session.getTransaction().commit();
-        } catch (Exception e) {
-            if (session.getTransaction() != null) {
-                session.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-            sessionFactory.close();
-        }
-
-        return divisions;
     }
 
 
