@@ -37,7 +37,6 @@ public class Match {
     @Column(name = "season")
     private int season;
 
-    // Constructores, getters y setters
     public Match() {}
 
     public Match(Division division, LocalDate matchDate, String homeTeam, String awayTeam,
@@ -50,6 +49,10 @@ public class Match {
         this.fullTimeAwayGoals = fullTimeAwayGoals;
         this.fullTimeResult = fullTimeResult;
         this.season = season;
+    }
+
+    public String getMatch(){
+        return "match";
     }
 
     public int getIdMatch() {

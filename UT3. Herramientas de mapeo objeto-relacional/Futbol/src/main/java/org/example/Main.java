@@ -3,43 +3,45 @@ package org.example;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import java.util.List;
+
+import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
-
         Configuration configuration = new Configuration();
-        configuration.configure("hibernate.cfg.xml"); // Cargar el archivo cfg.xml
-
+        configuration.configure("hibernate.cfg.xml");
         configuration.addAnnotatedClass(Division.class);
         configuration.addAnnotatedClass(Match.class);
 
-        try (SessionFactory sessionFactory = configuration.buildSessionFactory()) {
+        SessionFactory sessionFactory = configuration.buildSessionFactory();
 
-            Session session = sessionFactory.openSession();
+        try (Session session = sessionFactory.openSession()) {
+            DivisionDAO divisionDAO = new DivisionDAO(session);
 
-            session.beginTransaction();
-
-            Division division = new Division();
-            division.setDivision("Primera");
-            division.setName("Primera División");
-            division.setCountry("España");
-            session.save(division);
-
-
-            session.getTransaction().commit();
-
-            System.out.println("¡División creada y guardada en la base de datos!");
-
-            List<Division> divisions = session.createQuery("from Division", Division.class).getResultList();
-
-            for (Division div : divisions) {
-                System.out.println("División: " + div.getDivision() + ", Nombre: " + div.getName() + ", País: " + div.getCountry());
+            Division division = divisionDAO.buscar("dvi1");
+            if (division == null) {
+                division = new Division("dvi1", "Premier League", "England");
+                divisionDAO.insertar(division);
+                System.out.println("División creada: " + division.getName());
+            } else {
+                System.out.println("División: " + division.getName());
             }
+            MatchDAO matchDAO = new MatchDAO(session);
 
-            session.close();
+            Match match = new Match(
+                    division,
+                    LocalDate.of(2024, 12, 20), // Fecha del partido
+                    "Manchester United","Manchester City",
+                    2.0f, 3.0f,
+                    "A", 2024
+            );
+            matchDAO.insertar(match);
+
+            System.out.println("Partido creado: " + match.getHomeTeam() + " vs " + match.getAwayTeam());
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            sessionFactory.close();
         }
     }
 }
