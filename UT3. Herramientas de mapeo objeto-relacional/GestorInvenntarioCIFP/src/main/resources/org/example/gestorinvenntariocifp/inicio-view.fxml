@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.gestorinvenntariocifp.InicioController"
+            prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #f8f9fa;">
+    <VBox alignment="CENTER" spacing="20.0" layoutX="100.0" layoutY="80.0" prefWidth="400.0" prefHeight="240.0"
+          style="-fx-background-color: #ffffff; -fx-padding: 20; -fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
+
+        <!-- Título -->
+        <Label text="Inicio de Sesión" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #495057;" />
+
+        <!-- Campo de usuario -->
+        <VBox alignment="CENTER_LEFT" spacing="5.0">
+            <Label text="Usuario:" style="-fx-font-size: 14; -fx-text-fill: #495057;" />
+            <TextField fx:id="txtUsuario" promptText="Ingrese su usuario" style="-fx-background-color: #e9ecef; -fx-padding: 10; -fx-border-color: #ced4da; -fx-border-radius: 5;" />
+        </VBox>
+
+        <!-- Campo de contraseña -->
+        <VBox alignment="CENTER_LEFT" spacing="5.0">
+            <Label text="Contraseña:" style="-fx-font-size: 14; -fx-text-fill: #495057;" />
+            <PasswordField fx:id="txtPassword" promptText="Ingrese su contraseña" style="-fx-background-color: #e9ecef; -fx-padding: 10; -fx-border-color: #ced4da; -fx-border-radius: 5;" />
+        </VBox>
+
+        <!-- Botón de inicio de sesión -->
+        <Button text="Iniciar Sesión" fx:id="btnLogin"
+                style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 16; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10; -fx-border-radius: 5;"/>
+
+        <!-- Label de error -->
+        <Label fx:id="lblError" text="Credenciales incorrectas" visible="false"
+               style="-fx-text-fill: red; -fx-font-size: 12;" />
+
+    </VBox>
+</AnchorPane>
