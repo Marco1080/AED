@@ -1,14 +1,12 @@
 package org.example.gestorinvenntariocifp.modelos;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 @Entity
 @Table(name = "aula", schema = "inventario")
 public class Aula {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IdAula", nullable = false)
     private Integer id;
 
@@ -21,6 +19,7 @@ public class Aula {
     @Column(name = "IP", nullable = false, length = 15)
     private String ip;
 
+    // Getters y Setters
     public Integer getId() {
         return id;
     }

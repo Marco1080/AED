@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.gestorinvenntariocifp.MenuController"
+            prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f8f9fa;">
+
+    <!-- Barra de Menú -->
+    <MenuBar prefHeight="25.0" prefWidth="800.0" style="-fx-background-color: #e9ecef; -fx-border-color: #ced4da;">
+        <menus>
+            <!-- Menú Archivo -->
+            <Menu text="Archivo">
+                <items>
+                    <MenuItem text="Exportar a PDF" fx:id="menuExportarPDF" />
+                    <MenuItem text="Guardar" fx:id="menuGuardar" />
+                    <SeparatorMenuItem />
+                    <MenuItem text="Salir" fx:id="menuSalir" />
+                </items>
+            </Menu>
+
+            <!-- Menú Opciones -->
+            <Menu text="Opciones">
+                <items>
+                    <CheckMenuItem text="Modo Nocturno" fx:id="menuModoNocturno" />
+                </items>
+            </Menu>
+
+            <!-- Menú Ayuda -->
+            <Menu text="Ayuda">
+                <items>
+                    <MenuItem text="Versión actual" fx:id="menuVersionActual" />
+                    <MenuItem text="Soporte" fx:id="menuAcercaDe" />
+                </items>
+            </Menu>
+        </menus>
+    </MenuBar>
+
+    <!-- Contenedor Principal -->
+    <AnchorPane fx:id="vistaPrincipal" prefHeight="575.0" prefWidth="800.0" layoutY="25.0" style="-fx-background-color: #ffffff;">
+        <VBox alignment="CENTER" spacing="20.0" prefWidth="500.0" prefHeight="550.0" layoutX="150.0" layoutY="25.0"
+              style="-fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-padding: 20;">
+
+            <!-- Título -->
+            <Label text="Menú Principal" style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #495057;" />
+
+            <!-- Descripción -->
+            <Label text="Seleccione una opción para continuar:" style="-fx-font-size: 16; -fx-text-fill: #6c757d;" />
+
+            <!-- Botones de Funcionalidad -->
+            <GridPane hgap="20" vgap="20" alignment="CENTER">
+                <Button text="Marcajes" fx:id="btnMarcajesProducto" prefWidth="150.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                <Button text="Aulas" fx:id="btnAulas" prefWidth="150.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                <Button text="Productos" fx:id="btnMarcajesProductoAula" prefWidth="150.0" style="-fx-background-color: #ffc107; -fx-text-fill: #212529; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+                <Button text="Categorías" fx:id="btnProductosSinCategoria" prefWidth="150.0" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            </GridPane>
+
+            <!-- Botón Final -->
+            <Button text="Guardar y salir" fx:id="btnSalir" prefWidth="200.0" style="-fx-background-color: #17a2b8; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" />
+        </VBox>
+    </AnchorPane>
+</AnchorPane>

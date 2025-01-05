@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.gestorinvenntariocifp.NuevoProductoController"
+            prefHeight="600.0" prefWidth="600.0"
+            style="-fx-background-color: #f8f9fa;">
+
+    <VBox alignment="CENTER" spacing="20.0" layoutX="50.0" layoutY="50.0"
+          style="-fx-padding: 20; -fx-background-color: #ffffff; -fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
+        <!-- Título -->
+        <Label text="Nuevo Producto" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #495057;" />
+
+        <!-- Formulario -->
+        <GridPane hgap="10" vgap="10" style="-fx-padding: 10;">
+            <Label text="Descripción:" style="-fx-font-size: 14; -fx-font-weight: bold;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtDescripcion" promptText="Ingrese la descripción" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+
+            <Label text="EAN13:" style="-fx-font-size: 14; -fx-font-weight: bold;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtEan13" promptText="Ingrese el código EAN13" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+
+            <Label text="RFID:" style="-fx-font-size: 14; -fx-font-weight: bold;" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
+            <TextField fx:id="txtRfid" promptText="Ingrese el código RFID" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
+
+            <Label text="Asignar Aula:" style="-fx-font-size: 14; -fx-font-weight: bold;" GridPane.rowIndex="3" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="comboAulas" promptText="Seleccione un Aula" GridPane.rowIndex="3" GridPane.columnIndex="1"/>
+
+            <Label text="Categoría:" style="-fx-font-size: 14; -fx-font-weight: bold;" GridPane.rowIndex="4" GridPane.columnIndex="0"/>
+            <ComboBox fx:id="comboCategoria" promptText="Seleccione una categoría" GridPane.rowIndex="4" GridPane.columnIndex="1"/>
+
+            <!-- Estado como Radio Buttons -->
+            <Label text="Estado:" style="-fx-font-size: 14; -fx-font-weight: bold;" GridPane.rowIndex="5" GridPane.columnIndex="0"/>
+            <VBox spacing="10" GridPane.rowIndex="5" GridPane.columnIndex="1">
+                <RadioButton fx:id="radioNuevo" text="Nuevo" />
+                <RadioButton fx:id="radioUsado" text="Usado" />
+            </VBox>
+
+            <Label text="Fecha de Adquisición:" style="-fx-font-size: 14; -fx-font-weight: bold;" GridPane.rowIndex="6" GridPane.columnIndex="0"/>
+            <DatePicker fx:id="dateAdquisicion" GridPane.rowIndex="6" GridPane.columnIndex="1"/>
+
+            <!-- Cantidad en Stock con Spinner -->
+            <Label text="Cantidad en Stock:" style="-fx-font-size: 14; -fx-font-weight: bold;" GridPane.rowIndex="7" GridPane.columnIndex="0"/>
+            <Spinner fx:id="spinnerCantidad" GridPane.rowIndex="7" GridPane.columnIndex="1"/>
+
+            <!-- Precio Unitario con Slider -->
+            <Label text="Precio Unitario:" style="-fx-font-size: 14; -fx-font-weight: bold;" GridPane.rowIndex="8" GridPane.columnIndex="0"/>
+            <HBox spacing="10" alignment="CENTER_LEFT" GridPane.rowIndex="8" GridPane.columnIndex="1">
+                <Slider fx:id="sliderPrecio" min="0" max="1000" value="0" />
+                <Label fx:id="labelPrecio" text="0 €" />
+            </HBox>
+
+            <Label text="Notas/Comentarios:" style="-fx-font-size: 14; -fx-font-weight: bold;" GridPane.rowIndex="9" GridPane.columnIndex="0"/>
+            <TextArea fx:id="txtNotas" prefRowCount="2" promptText="Ingrese notas adicionales" GridPane.rowIndex="9" GridPane.columnIndex="1"/>
+        </GridPane>
+
+        <!-- Botones -->
+        <HBox spacing="10" alignment="CENTER">
+            <Button text="Guardar" fx:id="btnGuardar" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" />
+            <Button text="Cancelar" fx:id="btnCancelar" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" />
+        </HBox>
+    </VBox>
+</AnchorPane>

@@ -9,6 +9,8 @@ module org.example.gestorinvenntariocifp {
     requires java.naming;
 
     opens org.example.gestorinvenntariocifp to javafx.fxml;
-    opens org.example.gestorinvenntariocifp.modelos to org.hibernate.orm.core; // Esto es necesario para Hibernate
+
+    opens org.example.gestorinvenntariocifp.modelos to org.hibernate.orm.core, javafx.base;
+
     exports org.example.gestorinvenntariocifp;
 }

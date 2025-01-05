@@ -1,10 +1,15 @@
 package org.example.gestorinvenntariocifp;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 public class InicioController {
 
@@ -23,10 +28,10 @@ public class InicioController {
     @FXML
     public void initialize() {
         // Acción al hacer clic en el botón de inicio de sesión
-        btnLogin.setOnAction(event -> validarLogin());
+        btnLogin.setOnAction(event -> validarYMostrarMenu());
     }
 
-    private void validarLogin() {
+    private void validarYMostrarMenu() {
         // Obtiene los valores de los campos
         String usuario = txtUsuario.getText();
         String password = txtPassword.getText();
@@ -38,15 +43,16 @@ public class InicioController {
             return;
         }
 
-        // Validar credenciales (simulación)
-        if (usuario.equals("admin") && password.equals("admin123")) {
-            lblError.setText("Inicio de sesión exitoso.");
-            lblError.setStyle("-fx-text-fill: green;"); // Mensaje de éxito en verde
+        // Cargar la vista del menú
+        try {
+            Stage stage = (Stage) btnLogin.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("menu-view.fxml"));
+            Scene menuScene = new Scene(fxmlLoader.load());
+            stage.setScene(menuScene);
+        } catch (IOException e) {
+            lblError.setText("Error al cargar el menú.");
             lblError.setVisible(true);
-        } else {
-            lblError.setText("Usuario o contraseña incorrectos.");
-            lblError.setStyle("-fx-text-fill: red;"); // Mensaje de error en rojo
-            lblError.setVisible(true);
+            e.printStackTrace();
         }
     }
 }

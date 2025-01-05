@@ -5,6 +5,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 @Table(name = "marcaje", schema = "inventario")
@@ -13,12 +14,12 @@ public class Marcaje {
     @Column(name = "IdMarcaje", nullable = false)
     private Integer id;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false) // Cambiado a EAGER
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "IdProducto", nullable = false)
-    private org.example.gestorinvenntariocifp.modelos.Producto idProducto;
+    private Producto idProducto;
 
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false) // Cambiado a EAGER
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JoinColumn(name = "IdAula", nullable = false)
     private Aula idAula;
@@ -29,6 +30,25 @@ public class Marcaje {
     @Column(name = "TimeStamp", nullable = false)
     private Instant timeStamp;
 
+    // Método para obtener el tipo en formato descriptivo
+    public String getTipoDescripcion() {
+        switch (tipo) {
+            case 1:
+                return "Entrada";
+            case 2:
+                return "Salida";
+            case 3:
+                return "Mantenimiento";
+            default:
+                return "Desconocido";
+        }
+    }
+
+    // Método para obtener la fecha en formato legible
+    public String getFormattedTimeStamp() {
+        return DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").withZone(java.time.ZoneId.systemDefault()).format(timeStamp);
+    }
+
     public Integer getId() {
         return id;
     }
@@ -37,11 +57,11 @@ public class Marcaje {
         this.id = id;
     }
 
-    public org.example.gestorinvenntariocifp.modelos.Producto getIdProducto() {
+    public Producto getIdProducto() {
         return idProducto;
     }
 
-    public void setIdProducto(org.example.gestorinvenntariocifp.modelos.Producto idProducto) {
+    public void setIdProducto(Producto idProducto) {
         this.idProducto = idProducto;
     }
 
@@ -73,10 +93,10 @@ public class Marcaje {
     public String toString() {
         return "Marcaje{" +
                 "id=" + id +
-                ", idProducto=" + idProducto +
-                ", idAula=" + idAula +
-                ", tipo=" + tipo +
-                ", timeStamp=" + timeStamp +
+                ", idProducto=" + idProducto.getDescripcion() +
+                ", idAula=" + idAula.getDescripcion() +
+                ", tipo=" + getTipoDescripcion() +
+                ", timeStamp=" + getFormattedTimeStamp() +
                 '}';
     }
 }
