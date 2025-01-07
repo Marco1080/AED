@@ -62,7 +62,6 @@ public class NuevoProductoController {
     private Button btnCancelar;
 
     private ObservableList<String> numeracionesAulasObservableList = FXCollections.observableArrayList();
-
     private ObservableList<String> categoriasObservableList = FXCollections.observableArrayList();
 
     @FXML
@@ -103,19 +102,12 @@ public class NuevoProductoController {
 
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
-
-            // Consulta SQL nativa para obtener todas las categorías
             List<Object[]> categorias = session.createNativeQuery(
-                    "SELECT c.IdCategoria, c.Nombre " +
-                            "FROM categoria c"
+                    "SELECT c.IdCategoria, c.Nombre FROM categoria c"
             ).list();
-
-            // Agregar los nombres de las categorías al observable list
             for (Object[] categoria : categorias) {
-                String nombreCategoria = (String) categoria[1]; // c.Nombre
-                categoriasObservableList.add(nombreCategoria);
+                categoriasObservableList.add((String) categoria[1]);
             }
-
         } catch (Exception e) {
             mostrarAlerta("Error", "No se pudieron cargar las categorías.", Alert.AlertType.ERROR);
             e.printStackTrace();
@@ -162,7 +154,6 @@ public class NuevoProductoController {
             nuevoProducto.setEan13((int) ean13);
             nuevoProducto.setKeyRFID(rfid);
 
-            // Asignar categoría al producto si está seleccionada
             if (categoriaSeleccionada != null) {
                 nuevoProducto.setDescripcion(descripcion + " - Categoría: " + categoriaSeleccionada);
             }

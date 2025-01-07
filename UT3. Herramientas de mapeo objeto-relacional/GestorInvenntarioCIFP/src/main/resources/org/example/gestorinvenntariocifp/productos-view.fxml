@@ -1,47 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:id="vistaPrincipal"
-            fx:controller="org.example.gestorinvenntariocifp.ProductosController"
-            prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f8f9fa;">
-
-    <VBox alignment="CENTER" spacing="20.0" layoutX="50.0" layoutY="50.0"
-          style="-fx-padding: 20; -fx-background-color: #ffffff; -fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
-
-        <!-- Título -->
-        <Label text="Lista de Productos" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #495057;" />
-
-        <!-- Filtros de búsqueda -->
+<AnchorPane fx:id="vistaPrincipal" prefHeight="850.0" prefWidth="800.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.gestorinvenntariocifp.ProductosController">
+    <VBox alignment="CENTER" layoutX="50.0" layoutY="50.0" prefHeight="750.0" prefWidth="743.0" spacing="20.0" style="-fx-padding: 20; -fx-background-color: #ffffff; -fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
+        <Label style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #495057;" text="Productos" />
         <HBox alignment="CENTER" spacing="10.0" style="-fx-padding: 10;">
-            <TextField fx:id="txtBuscar" promptText="Buscar por descripción o nombre" prefWidth="400.0"
-                       style="-fx-background-radius: 5; -fx-padding: 10;" />
-            <Button text="Buscar" fx:id="btnBuscar" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" />
-            <Button text="Añadir Producto" fx:id="btnAnadirProducto" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" />
+           <Button fx:id="btnAtras" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Atrás" />
+            <TextField fx:id="txtBuscar" prefWidth="400.0" promptText="Buscar por descripción o nombre" style="-fx-background-radius: 5; -fx-padding: 10;" />
+            <Button fx:id="btnBuscar" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Buscar" />
+            <Button fx:id="btnAnadirProducto" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Añadir producto" />
         </HBox>
-
-        <!-- Tabla de Productos -->
-        <TableView fx:id="tablaProductos" prefHeight="400.0" prefWidth="700.0"
-                   style="-fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
+        <TableView fx:id="tablaProductos" prefHeight="400.0" prefWidth="700.0" style="-fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
             <columns>
-                <!-- Columna ID -->
-                <TableColumn text="ID" fx:id="colId" prefWidth="100.0" style="-fx-alignment: CENTER;" />
-
-                <!-- Columna Descripción -->
-                <TableColumn text="Descripción" fx:id="colDescripcion" prefWidth="300.0" style="-fx-alignment: CENTER-LEFT;" />
-
-                <!-- Columna EAN13 -->
-                <TableColumn text="EAN13" fx:id="colEan13" prefWidth="150.0" style="-fx-alignment: CENTER;" />
-
-                <!-- Columna RFID -->
-                <TableColumn text="RFID" fx:id="colRfid" prefWidth="150.0" style="-fx-alignment: CENTER;" />
+                <TableColumn fx:id="colId" prefWidth="100.0" style="-fx-alignment: CENTER;" text="ID" />
+                <TableColumn fx:id="colDescripcion" prefWidth="300.0" style="-fx-alignment: CENTER-LEFT;" text="Descripción" />
+                <TableColumn fx:id="colEan13" prefWidth="150.0" style="-fx-alignment: CENTER;" text="EAN13" />
+                <TableColumn fx:id="colRfid" prefWidth="150.0" style="-fx-alignment: CENTER;" text="RFID" />
             </columns>
         </TableView>
-
-        <!-- Botón Atrás -->
-        <Button text="Atrás" fx:id="btnAtras" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" />
     </VBox>
 </AnchorPane>

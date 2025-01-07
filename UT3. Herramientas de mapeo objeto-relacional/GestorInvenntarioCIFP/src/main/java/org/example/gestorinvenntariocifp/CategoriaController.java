@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.gestorinvenntariocifp.modelos.Categoria;
 import org.hibernate.Session;
@@ -43,46 +42,39 @@ public class CategoriaController {
 
     @FXML
     public void initialize() {
-        // Configurar las columnas de la tabla
-        colIdCategoria.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
-        colNombreCategoria.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
-        colProductosAsociados.setCellValueFactory(cellData -> cellData.getValue().productosAsociadosProperty().asObject());
-
-        // Cargar datos de categorías
+        configurarColumnas();
         cargarCategorias();
-
-        // Configurar botones
         btnEliminarCategoria.setOnAction(event -> eliminarCategoriaSeleccionada());
         btnActualizarCategoria.setOnAction(event -> actualizarCategoriaSeleccionada());
         btnVolverMenu.setOnAction(event -> volverAlMenu());
     }
 
+    private void configurarColumnas() {
+        colIdCategoria.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());
+        colNombreCategoria.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+        colProductosAsociados.setCellValueFactory(cellData -> cellData.getValue().productosAsociadosProperty().asObject());
+    }
+
     private void cargarCategorias() {
         categoriasObservableList.clear();
-
-        Configuration configuration = new Configuration();
-        configuration.configure("hibernate.cfg.xml");
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
 
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
-
-            // Consulta SQL nativa para obtener categorías y conteo de productos
             List<Object[]> categorias = session.createNativeQuery(
                     "SELECT c.IdCategoria, c.Nombre, COUNT(p.IdProducto) " +
                             "FROM categoria c LEFT JOIN productos p ON c.IdCategoria = p.IdCategoria " +
                             "GROUP BY c.IdCategoria, c.Nombre"
             ).list();
 
-            // Crear objetos de categoría y agregarlos a la lista observable
             for (Object[] categoria : categorias) {
                 Categoria nuevaCategoria = new Categoria(
-                        (Integer) categoria[0], // IdCategoria
-                        (String) categoria[1],  // Nombre
-                        ((Number) categoria[2]).intValue() // Conteo de productos
+                        (Integer) categoria[0],
+                        (String) categoria[1],
+                        ((Number) categoria[2]).intValue()
                 );
                 categoriasObservableList.add(nuevaCategoria);
             }
-
         } catch (Exception e) {
             mostrarAlerta("Error", "No se pudieron cargar las categorías.", Alert.AlertType.ERROR);
             e.printStackTrace();
@@ -98,22 +90,16 @@ public class CategoriaController {
             return;
         }
 
-        Configuration configuration = new Configuration();
-        configuration.configure("hibernate.cfg.xml");
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
 
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
-
             session.beginTransaction();
-
-            // Establecer la categoría de los productos asociados a NULL
             session.createNativeQuery(
                             "UPDATE productos SET IdCategoria = NULL WHERE IdCategoria = :idCategoria"
                     )
                     .setParameter("idCategoria", categoriaSeleccionada.getId())
                     .executeUpdate();
-
-            // Eliminar la categoría después de actualizar los productos
             Categoria categoria = session.get(Categoria.class, categoriaSeleccionada.getId());
             if (categoria != null) {
                 session.delete(categoria);
@@ -122,10 +108,7 @@ public class CategoriaController {
             } else {
                 mostrarAlerta("Error", "No se encontró la categoría seleccionada en la base de datos.", Alert.AlertType.ERROR);
             }
-
-            // Recargar las categorías en la tabla
             cargarCategorias();
-
         } catch (Exception e) {
             mostrarAlerta("Error", "No se pudo eliminar la categoría debido a un error inesperado.", Alert.AlertType.ERROR);
             e.printStackTrace();
@@ -138,8 +121,6 @@ public class CategoriaController {
             mostrarAlerta("Advertencia", "Debe seleccionar una categoría para actualizar.", Alert.AlertType.WARNING);
             return;
         }
-
-        // Aquí puedes implementar la lógica para abrir una nueva vista para actualizar la categoría
         mostrarAlerta("Pendiente", "Funcionalidad de actualizar categoría aún no implementada.", Alert.AlertType.INFORMATION);
     }
 

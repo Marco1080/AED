@@ -11,51 +11,30 @@ import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
-        // Crear una configuración de Hibernate desde el archivo hibernate.cfg.xml
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
 
-        // Crear la fábrica de sesiones
         try (SessionFactory sessionFactory = configuration.buildSessionFactory()) {
-            // Abrir una sesión
             try (Session session = sessionFactory.openSession()) {
-                System.out.println("¡Conexión exitosa con la base de datos!");
+                System.out.println("Conexión exitosa con la base de datos.");
 
-                // Iniciar transacción
                 session.beginTransaction();
 
-                // Consultar las aulas
                 List<Aula> aulas = session.createQuery("from Aula", Aula.class).list();
                 System.out.println("Aulas:");
-                for (Aula aula : aulas) {
-                    System.out.println("ID: " + aula.getId() +
-                            ", Numeración: " + aula.getNumeracion() +
-                            ", Descripción: " + aula.getDescripcion() +
-                            ", IP: " + aula.getIp());
-                }
+                aulas.forEach(aula -> System.out.printf("ID: %d, Numeración: %s, Descripción: %s, IP: %s%n",
+                        aula.getId(), aula.getNumeracion(), aula.getDescripcion(), aula.getIp()));
 
-                // Consultar los productos
                 List<Producto> productos = session.createQuery("from Producto", Producto.class).list();
                 System.out.println("\nProductos:");
-                for (Producto producto : productos) {
-                    System.out.println("ID: " + producto.getId() +
-                            ", Descripción: " + producto.getDescripcion() +
-                            ", EAN13: " + producto.getEan13() +
-                            ", RFID: " + producto.getKeyRFID());
-                }
+                productos.forEach(producto -> System.out.printf("ID: %d, Descripción: %s, EAN13: %d, RFID: %s%n",
+                        producto.getId(), producto.getDescripcion(), producto.getEan13(), producto.getKeyRFID()));
 
-                // Consultar los marcajes
                 List<Marcaje> marcajes = session.createQuery("from Marcaje", Marcaje.class).list();
                 System.out.println("\nMarcajes:");
-                for (Marcaje marcaje : marcajes) {
-                    System.out.println("ID: " + marcaje.getId() +
-                            ", Producto ID: " + marcaje.getIdProducto().getId() +
-                            ", Aula ID: " + marcaje.getIdAula().getId() +
-                            ", Tipo: " + marcaje.getTipo() +
-                            ", Timestamp: " + marcaje.getTimeStamp());
-                }
+                marcajes.forEach(marcaje -> System.out.printf("ID: %d, Producto ID: %d, Aula ID: %d, Tipo: %s, Timestamp: %s%n",
+                        marcaje.getId(), marcaje.getIdProducto().getId(), marcaje.getIdAula().getId(), marcaje.getTipo(), marcaje.getTimeStamp()));
 
-                // Finalizar transacción
                 session.getTransaction().commit();
             }
         } catch (Exception e) {

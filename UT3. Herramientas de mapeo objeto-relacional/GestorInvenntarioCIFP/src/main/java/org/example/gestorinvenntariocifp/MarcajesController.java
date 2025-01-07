@@ -64,18 +64,12 @@ public class MarcajesController {
 
     @FXML
     public void initialize() {
-        // Configurar columnas
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colProducto.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() ->
-                cellData.getValue().getIdProducto().getDescripcion()));
-        colAula.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() ->
-                cellData.getValue().getIdAula().getDescripcion()));
-        colTipo.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() ->
-                cellData.getValue().getTipoDescripcion()));
-        colTimestamp.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() ->
-                cellData.getValue().getFormattedTimeStamp()));
+        colProducto.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getIdProducto().getDescripcion()));
+        colAula.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getIdAula().getDescripcion()));
+        colTipo.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getTipoDescripcion()));
+        colTimestamp.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getFormattedTimeStamp()));
 
-        // Hacer las columnas editables
         tablaMarcajes.setEditable(true);
         colTipo.setCellFactory(TextFieldTableCell.forTableColumn());
         colTipo.setOnEditCommit(event -> {
@@ -89,10 +83,7 @@ public class MarcajesController {
             }
         });
 
-        // Cargar los datos
         cargarDatosMarcajes();
-
-        // Configurar eventos de botones
         btnBuscar.setOnAction(event -> aplicarFiltros());
         btnNuevoMarcaje.setOnAction(event -> abrirVistaNuevoMarcaje());
         btnAtras.setOnAction(event -> volverAlMenu());
@@ -100,14 +91,10 @@ public class MarcajesController {
 
     private void cargarDatosMarcajes() {
         marcajesObservableList.clear();
-
-        // Configurar Hibernate
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
 
-        try (SessionFactory sessionFactory = configuration.buildSessionFactory();
-             Session session = sessionFactory.openSession()) {
-            // Consulta para obtener todos los marcajes
+        try (SessionFactory sessionFactory = configuration.buildSessionFactory(); Session session = sessionFactory.openSession()) {
             List<Marcaje> marcajes = session.createQuery("from Marcaje", Marcaje.class).list();
             marcajesObservableList.addAll(marcajes);
         } catch (Exception e) {
@@ -115,7 +102,6 @@ public class MarcajesController {
             e.printStackTrace();
         }
 
-        // Establecer los datos en la tabla
         tablaMarcajes.setItems(marcajesObservableList);
     }
 
@@ -123,8 +109,7 @@ public class MarcajesController {
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
 
-        try (SessionFactory sessionFactory = configuration.buildSessionFactory();
-             Session session = sessionFactory.openSession()) {
+        try (SessionFactory sessionFactory = configuration.buildSessionFactory(); Session session = sessionFactory.openSession()) {
             session.beginTransaction();
             session.update(marcaje);
             session.getTransaction().commit();
@@ -139,7 +124,6 @@ public class MarcajesController {
         LocalDate desde = dateDesde.getValue();
         LocalDate hasta = dateHasta.getValue();
 
-        // Si no hay filtros, recargar todos los datos
         if (filtroDescripcion.isEmpty() && desde == null && hasta == null) {
             cargarDatosMarcajes();
             return;
@@ -148,12 +132,10 @@ public class MarcajesController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         List<Marcaje> filtrados = marcajesObservableList.stream()
-                .filter(marcaje -> filtroDescripcion.isEmpty() ||
-                        marcaje.getIdProducto().getDescripcion().toLowerCase().contains(filtroDescripcion))
+                .filter(marcaje -> filtroDescripcion.isEmpty() || marcaje.getIdProducto().getDescripcion().toLowerCase().contains(filtroDescripcion))
                 .filter(marcaje -> {
                     String fechaStr = marcaje.getFormattedTimeStamp();
                     try {
-                        // Validar el formato de la fecha completa y extraer solo la parte de fecha
                         LocalDateTime fechaHoraMarcaje = LocalDateTime.parse(fechaStr, formatter);
                         LocalDate fechaMarcaje = fechaHoraMarcaje.toLocalDate();
 

@@ -19,7 +19,6 @@ public class Aula {
     @Column(name = "IP", nullable = false, length = 15)
     private String ip;
 
-    // Getters y Setters
     public Integer getId() {
         return id;
     }

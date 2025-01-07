@@ -55,28 +55,14 @@ public class ProductosController {
 
     @FXML
     public void initialize() {
-        if (vistaPrincipal == null) {
-            System.out.println("Error: vistaPrincipal no está inicializada. Verifica el fx:id en productos-view.fxml.");
-        } else {
-            System.out.println("vistaPrincipal inicializada correctamente.");
-        }
-
-        // Configurar columnas
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colDescripcion.setCellValueFactory(new PropertyValueFactory<>("descripcion"));
         colEan13.setCellValueFactory(new PropertyValueFactory<>("ean13"));
         colRfid.setCellValueFactory(new PropertyValueFactory<>("keyRFID"));
 
-        // Cargar datos
         cargarProductos();
-
-        // Acción para buscar productos
         btnBuscar.setOnAction(event -> buscarProductos());
-
-        // Acción para añadir producto
         btnAnadirProducto.setOnAction(event -> abrirVistaNuevoProducto());
-
-        // Acción para regresar al menú principal
         btnAtras.setOnAction(event -> volverAlMenu());
     }
 
@@ -86,14 +72,12 @@ public class ProductosController {
 
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
-            // Consulta para obtener todos los productos
             List<Producto> productos = session.createQuery("from Producto", Producto.class).list();
             productosObservableList.setAll(productos);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Establecer los datos en la tabla
         tablaProductos.setItems(productosObservableList);
     }
 
@@ -116,7 +100,6 @@ public class ProductosController {
             AnchorPane nuevaVista = loader.load();
             vistaPrincipal.getChildren().setAll(nuevaVista);
         } catch (IOException e) {
-            System.err.println("Error al cargar la vista nuevoProducto-view.fxml: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -127,7 +110,6 @@ public class ProductosController {
             AnchorPane menuVista = loader.load();
             vistaPrincipal.getChildren().setAll(menuVista);
         } catch (IOException e) {
-            System.err.println("Error al cargar la vista del menú: " + e.getMessage());
             e.printStackTrace();
         }
     }

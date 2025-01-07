@@ -1,57 +1,73 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.geometry.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.gestorinvenntariocifp.MarcajesController"
-            prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f8f9fa;">
-    <VBox alignment="CENTER" spacing="20.0" layoutX="50.0" layoutY="50.0"
-          style="-fx-padding: 20; -fx-background-color: #ffffff; -fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
+<AnchorPane prefHeight="775.0" prefWidth="788.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.gestorinvenntariocifp.MarcajesController">
+    <VBox alignment="CENTER" layoutX="50.0" layoutY="50.0" prefHeight="655.0" prefWidth="757.0" spacing="20.0" style="-fx-padding: 20; -fx-background-color: #ffffff; -fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
 
         <!-- Título -->
-        <Label text="Lista de Marcajes" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #495057;" />
+        <Label style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #495057;" text="Marcajes" />
 
         <!-- Filtros -->
-        <GridPane hgap="10" vgap="10" alignment="CENTER" style="-fx-padding: 10;">
-            <Label text="Buscar por Descripción:" style="-fx-font-size: 14; -fx-font-weight: bold;" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-            <TextField fx:id="txtBuscarDescripcion" promptText="Ingrese descripción o nombre" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+        <GridPane alignment="CENTER" hgap="10" style="-fx-padding: 10;" vgap="10">
+            <Label style="-fx-font-size: 14; -fx-font-weight: bold;" text="Buscar por descripción:" GridPane.columnIndex="0" GridPane.rowIndex="0" />
+            <TextField fx:id="txtBuscarDescripcion" promptText="Ingrese descripción o nombre" GridPane.columnIndex="1" GridPane.rowIndex="0" />
 
-            <Label text="Desde:" style="-fx-font-size: 14; -fx-font-weight: bold;" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-            <DatePicker fx:id="dateDesde" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
+            <Label style="-fx-font-size: 14; -fx-font-weight: bold;" text="Desde:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+            <DatePicker fx:id="dateDesde" GridPane.columnIndex="1" GridPane.rowIndex="1" />
 
-            <Label text="Hasta:" style="-fx-font-size: 14; -fx-font-weight: bold;" GridPane.rowIndex="1" GridPane.columnIndex="2"/>
-            <DatePicker fx:id="dateHasta" GridPane.rowIndex="1" GridPane.columnIndex="3"/>
+            <Label style="-fx-font-size: 14; -fx-font-weight: bold;" text="Hasta:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+            <DatePicker fx:id="dateHasta" GridPane.columnIndex="3" GridPane.rowIndex="1" />
 
-            <HBox spacing="10" alignment="CENTER" GridPane.rowIndex="2" GridPane.columnIndex="1">
-                <Button text="Buscar" fx:id="btnBuscar" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" />
-                <Button text="Nuevo Marcaje" fx:id="btnNuevoMarcaje" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" />
+            <HBox alignment="CENTER" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <Button fx:id="btnBuscar" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar" />
+                <Button fx:id="btnNuevoMarcaje" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Nuevo marcaje" />
             </HBox>
+   
+           <!-- Botón Atrás -->
+           <Button fx:id="btnAtras" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Atrás" GridPane.rowIndex="2" />
+         <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+            <ColumnConstraints />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+            <RowConstraints />
+         </rowConstraints>
         </GridPane>
 
         <!-- Tabla de Marcajes -->
-        <TableView fx:id="tablaMarcajes" prefHeight="400.0" prefWidth="700.0"
-                   style="-fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
+        <TableView fx:id="tablaMarcajes" prefHeight="400.0" prefWidth="700.0" style="-fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
             <columns>
                 <!-- Columna ID -->
-                <TableColumn text="ID" fx:id="colId" prefWidth="100.0" style="-fx-alignment: CENTER; -fx-font-size: 14;" />
+                <TableColumn fx:id="colId" prefWidth="100.0" style="-fx-alignment: CENTER; -fx-font-size: 14;" text="ID" />
 
                 <!-- Columna Producto -->
-                <TableColumn text="Producto" fx:id="colProducto" prefWidth="200.0" style="-fx-alignment: CENTER; -fx-font-size: 14;" />
+                <TableColumn fx:id="colProducto" prefWidth="200.0" style="-fx-alignment: CENTER; -fx-font-size: 14;" text="Producto" />
 
                 <!-- Columna Aula -->
-                <TableColumn text="Aula" fx:id="colAula" prefWidth="200.0" style="-fx-alignment: CENTER; -fx-font-size: 14;" />
+                <TableColumn fx:id="colAula" prefWidth="200.0" style="-fx-alignment: CENTER; -fx-font-size: 14;" text="Aula" />
 
                 <!-- Columna Tipo -->
-                <TableColumn text="Tipo" fx:id="colTipo" prefWidth="100.0" style="-fx-alignment: CENTER; -fx-font-size: 14;" />
+                <TableColumn fx:id="colTipo" prefWidth="100.0" style="-fx-alignment: CENTER; -fx-font-size: 14;" text="Tipo" />
 
                 <!-- Columna Timestamp -->
-                <TableColumn text="Timestamp" fx:id="colTimestamp" prefWidth="300.0" style="-fx-alignment: CENTER; -fx-font-size: 14;" />
+                <TableColumn fx:id="colTimestamp" prefWidth="300.0" style="-fx-alignment: CENTER; -fx-font-size: 14;" text="Timestamp" />
             </columns>
         </TableView>
-
-        <!-- Botón Atrás -->
-        <Button text="Atrás" fx:id="btnAtras" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" />
     </VBox>
 </AnchorPane>

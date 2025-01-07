@@ -42,40 +42,32 @@ public class AulasController {
 
     @FXML
     public void initialize() {
-        System.out.println("Inicializando controlador de aulas...");
+        configurarColumnas();
+        cargarAulas();
 
-        // Configurar columnas
+        btnRecargar.setOnAction(event -> cargarAulas());
+        btnAtras.setOnAction(event -> volverAlMenu());
+    }
+
+    private void configurarColumnas() {
         colId.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("id"));
         colNumeracion.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("numeracion"));
         colDescripcion.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("descripcion"));
         colIp.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("ip"));
-
-        // Cargar datos al inicio
-        cargarAulas();
-
-        // Acción del botón Recargar
-        btnRecargar.setOnAction(event -> cargarAulas());
-
-        // Acción del botón Atrás
-        btnAtras.setOnAction(event -> volverAlMenu());
     }
 
     private void cargarAulas() {
         ObservableList<Aula> aulasObservableList = FXCollections.observableArrayList();
-
-        Configuration configuration = new Configuration();
-        configuration.configure("hibernate.cfg.xml");
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
 
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
-            // Consulta para obtener todas las aulas
             List<Aula> aulas = session.createQuery("from Aula", Aula.class).list();
             aulasObservableList.addAll(aulas);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        // Establecer los datos en la tabla
         tablaAulas.setItems(aulasObservableList);
     }
 

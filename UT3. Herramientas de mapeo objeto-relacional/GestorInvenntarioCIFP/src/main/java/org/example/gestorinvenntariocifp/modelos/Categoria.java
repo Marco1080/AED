@@ -19,7 +19,6 @@ public class Categoria {
         this.productosAsociados = new SimpleIntegerProperty(productosAsociados);
     }
 
-    // Getters y setters para propiedades observables
     public int getId() {
         return id.get();
     }
