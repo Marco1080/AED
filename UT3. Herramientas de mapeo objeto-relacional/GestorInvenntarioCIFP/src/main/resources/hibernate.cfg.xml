@@ -20,5 +20,7 @@
         <mapping class="org.example.gestorinvenntariocifp.modelos.Aula"/>
         <mapping class="org.example.gestorinvenntariocifp.modelos.Marcaje"/>
         <mapping class="org.example.gestorinvenntariocifp.modelos.Producto"/>
+        <mapping class="org.example.gestorinvenntariocifp.modelos.Categoria"/>
+
     </session-factory>
 </hibernate-configuration>

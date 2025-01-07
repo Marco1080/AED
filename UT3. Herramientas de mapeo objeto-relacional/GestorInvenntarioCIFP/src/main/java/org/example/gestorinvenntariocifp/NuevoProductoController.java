@@ -63,9 +63,12 @@ public class NuevoProductoController {
 
     private ObservableList<String> numeracionesAulasObservableList = FXCollections.observableArrayList();
 
+    private ObservableList<String> categoriasObservableList = FXCollections.observableArrayList();
+
     @FXML
     public void initialize() {
         cargarAulas();
+        cargarCategorias();
         configurarEstadoRadioButtons();
         configurarSpinnerCantidad();
         configurarSliderPrecio();
@@ -92,6 +95,35 @@ public class NuevoProductoController {
         comboAulas.setItems(numeracionesAulasObservableList);
     }
 
+    private void cargarCategorias() {
+        categoriasObservableList.clear();
+
+        Configuration configuration = new Configuration();
+        configuration.configure("hibernate.cfg.xml");
+
+        try (SessionFactory sessionFactory = configuration.buildSessionFactory();
+             Session session = sessionFactory.openSession()) {
+
+            // Consulta SQL nativa para obtener todas las categorías
+            List<Object[]> categorias = session.createNativeQuery(
+                    "SELECT c.IdCategoria, c.Nombre " +
+                            "FROM categoria c"
+            ).list();
+
+            // Agregar los nombres de las categorías al observable list
+            for (Object[] categoria : categorias) {
+                String nombreCategoria = (String) categoria[1]; // c.Nombre
+                categoriasObservableList.add(nombreCategoria);
+            }
+
+        } catch (Exception e) {
+            mostrarAlerta("Error", "No se pudieron cargar las categorías.", Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+
+        comboCategoria.setItems(categoriasObservableList);
+    }
+
     private void configurarEstadoRadioButtons() {
         ToggleGroup toggleGroupEstado = new ToggleGroup();
         radioNuevo.setToggleGroup(toggleGroupEstado);
@@ -114,12 +146,11 @@ public class NuevoProductoController {
         String rfid = txtRfid.getText().trim();
         String numeracionSeleccionada = comboAulas.getValue();
         String categoriaSeleccionada = comboCategoria.getValue();
-        RadioButton estadoSeleccionado = (radioNuevo.isSelected()) ? radioNuevo : radioUsado;
         Integer cantidadStock = spinnerCantidad.getValue();
         Double precioUnitario = sliderPrecio.getValue();
 
-        if (descripcion.isEmpty() || ean13Text.isEmpty() || rfid.isEmpty() || numeracionSeleccionada == null || categoriaSeleccionada == null || estadoSeleccionado == null || cantidadStock == null || precioUnitario == null) {
-            mostrarAlerta("Campos Obligatorios", "Todos los campos son obligatorios.", Alert.AlertType.WARNING);
+        if (descripcion.isEmpty() || ean13Text.isEmpty() || rfid.isEmpty() || numeracionSeleccionada == null || cantidadStock == null || precioUnitario == null) {
+            mostrarAlerta("Campos Obligatorios", "Todos los campos son obligatorios, excepto la categoría.", Alert.AlertType.WARNING);
             return;
         }
 
@@ -130,14 +161,10 @@ public class NuevoProductoController {
             nuevoProducto.setDescripcion(descripcion);
             nuevoProducto.setEan13((int) ean13);
             nuevoProducto.setKeyRFID(rfid);
-            // Guardar otros valores según corresponda (ej. categoría, estado, etc.)
-            //nuevoProducto.setCantidadStock(cantidadStock);
-            //nuevoProducto.setPrecioUnitario(precioUnitario);
 
-            Aula aulaSeleccionada = buscarAulaPorNumeracion(numeracionSeleccionada);
-            if (aulaSeleccionada != null) {
-                System.out.println("Aula asignada al producto: " + aulaSeleccionada.getNumeracion());
-                // Asignar el aula seleccionada al producto si corresponde
+            // Asignar categoría al producto si está seleccionada
+            if (categoriaSeleccionada != null) {
+                nuevoProducto.setDescripcion(descripcion + " - Categoría: " + categoriaSeleccionada);
             }
 
             guardarEnBaseDatos(nuevoProducto);
@@ -147,22 +174,6 @@ public class NuevoProductoController {
         } catch (NumberFormatException e) {
             mostrarAlerta("Error de Validación", "El campo EAN13 debe ser un número válido.", Alert.AlertType.ERROR);
         }
-    }
-
-    private Aula buscarAulaPorNumeracion(String numeracion) {
-        Configuration configuration = new Configuration();
-        configuration.configure("hibernate.cfg.xml");
-
-        try (SessionFactory sessionFactory = configuration.buildSessionFactory();
-             Session session = sessionFactory.openSession()) {
-            return session.createQuery("from Aula where numeracion = :numeracion", Aula.class)
-                    .setParameter("numeracion", numeracion)
-                    .uniqueResult();
-        } catch (Exception e) {
-            mostrarAlerta("Error", "No se pudo encontrar el aula seleccionada.", Alert.AlertType.ERROR);
-            e.printStackTrace();
-        }
-        return null;
     }
 
     private void guardarEnBaseDatos(Producto producto) {

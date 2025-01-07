@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.gestorinvenntariocifp.CategoriaController"
+            prefHeight="600.0" prefWidth="800.0"
+            style="-fx-background-color: #f8f9fa;">
+
+    <!-- Contenedor principal -->
+    <VBox alignment="CENTER" spacing="20.0" layoutX="50.0" layoutY="50.0"
+          style="-fx-padding: 20; -fx-background-color: #ffffff; -fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
+
+        <!-- Título -->
+        <Label text="Gestión de Categorías" style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #495057;" />
+
+        <!-- Tabla de Categorías -->
+        <TableView fx:id="tablaCategorias" prefHeight="400.0" prefWidth="700.0"
+                   style="-fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
+            <columns>
+                <TableColumn text="ID Categoría" fx:id="colIdCategoria" prefWidth="150.0" />
+                <TableColumn text="Nombre Categoría" fx:id="colNombreCategoria" prefWidth="300.0" />
+                <TableColumn text="Productos Asociados" fx:id="colProductosAsociados" prefWidth="250.0" />
+            </columns>
+        </TableView>
+
+        <!-- Contenedor de botones -->
+        <HBox spacing="20" alignment="CENTER">
+            <Button text="Eliminar Categoría" fx:id="btnEliminarCategoria" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" />
+            <Button text="Actualizar Categoría" fx:id="btnActualizarCategoria" style="-fx-background-color: #ffc107; -fx-text-fill: #212529; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" />
+            <Button text="Volver al Menú" fx:id="btnVolverMenu" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" />
+        </HBox>
+    </VBox>
+</AnchorPane>

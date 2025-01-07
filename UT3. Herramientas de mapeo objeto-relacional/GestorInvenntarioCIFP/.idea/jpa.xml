@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="JpaBuddyIdeaProjectConfig" reUseTableSchema="true">
+  <component name="JpaBuddyIdeaProjectConfig" migrateIndexesAndConstraints="true" reUseTableSchema="true">
+    <option name="migrateIndexesAndConstraints" value="true" />
     <option name="reLastEntityCreationPackage" value="src/main/java/org/example/gestorinvenntariocifp/modelos" />
-    <option name="reverseEngineeringLastDbConnectionId" value="3db035e8-5e02-48a7-8d59-6d729c9c6dca" />
+    <option name="reverseEngineeringLastDbConnectionId" value="2c60d9d7-6b34-4e54-bd7d-4c36876dedf0" />
   </component>
 </project>
