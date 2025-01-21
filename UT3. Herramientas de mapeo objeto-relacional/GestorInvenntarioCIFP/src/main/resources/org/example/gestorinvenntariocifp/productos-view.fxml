@@ -13,10 +13,11 @@
     <VBox alignment="CENTER" layoutX="50.0" layoutY="50.0" prefHeight="750.0" prefWidth="743.0" spacing="20.0" style="-fx-padding: 20; -fx-background-color: #ffffff; -fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
         <Label style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #495057;" text="Productos" />
         <HBox alignment="CENTER" spacing="10.0" style="-fx-padding: 10;">
-           <Button fx:id="btnAtras" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Atrás" />
+            <Button fx:id="btnAtras" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Atrás" />
             <TextField fx:id="txtBuscar" prefWidth="400.0" promptText="Buscar por descripción o nombre" style="-fx-background-radius: 5; -fx-padding: 10;" />
             <Button fx:id="btnBuscar" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Buscar" />
             <Button fx:id="btnAnadirProducto" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Añadir producto" />
+            <Button fx:id="btnEliminar" style="-fx-background-color: #ffc107; -fx-text-fill: black; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Eliminar producto" />
         </HBox>
         <TableView fx:id="tablaProductos" prefHeight="400.0" prefWidth="700.0" style="-fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
             <columns>

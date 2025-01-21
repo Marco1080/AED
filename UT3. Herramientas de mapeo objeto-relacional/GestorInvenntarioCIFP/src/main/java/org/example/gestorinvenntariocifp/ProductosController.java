@@ -51,6 +51,9 @@ public class ProductosController {
     @FXML
     private Button btnAtras;
 
+    @FXML
+    private Button btnEliminar;
+
     private ObservableList<Producto> productosObservableList = FXCollections.observableArrayList();
 
     @FXML
@@ -64,6 +67,7 @@ public class ProductosController {
         btnBuscar.setOnAction(event -> buscarProductos());
         btnAnadirProducto.setOnAction(event -> abrirVistaNuevoProducto());
         btnAtras.setOnAction(event -> volverAlMenu());
+        btnEliminar.setOnAction(event -> eliminarProductoSeleccionado());
     }
 
     private void cargarProductos() {
@@ -110,6 +114,28 @@ public class ProductosController {
             AnchorPane menuVista = loader.load();
             vistaPrincipal.getChildren().setAll(menuVista);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void eliminarProductoSeleccionado() {
+        Producto productoSeleccionado = tablaProductos.getSelectionModel().getSelectedItem();
+        if (productoSeleccionado == null) {
+            return;
+        }
+
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+
+        try (SessionFactory sessionFactory = configuration.buildSessionFactory();
+             Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            Producto producto = session.get(Producto.class, productoSeleccionado.getId());
+            if (producto != null) {
+                session.delete(producto);
+                session.getTransaction().commit();
+                productosObservableList.remove(productoSeleccionado);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

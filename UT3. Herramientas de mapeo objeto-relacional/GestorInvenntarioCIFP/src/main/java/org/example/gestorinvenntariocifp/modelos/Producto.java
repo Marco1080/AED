@@ -14,12 +14,12 @@ public class Producto {
     private String descripcion;
 
     @Column(name = "EAN13", nullable = false)
-    private Integer ean13;
+    private int ean;
 
     @Column(name = "keyRFID", nullable = false, length = 10)
     private String keyRFID;
 
-    @Column(name = "IdCategoria", nullable = true) // Se permite que sea NULL
+    @Column(name = "IdCategoria", nullable = true)
     private Integer idCategoria;
 
     public Integer getId() {
@@ -38,12 +38,12 @@ public class Producto {
         this.descripcion = descripcion;
     }
 
-    public Integer getEan13() {
-        return ean13;
+    public int getEan13() {
+        return ean;
     }
 
-    public void setEan13(Integer ean13) {
-        this.ean13 = ean13;
+    public void setEan13(int ean) {
+        this.ean = ean;
     }
 
     public String getKeyRFID() {
@@ -67,7 +67,7 @@ public class Producto {
         return "Producto{" +
                 "id=" + id +
                 ", descripcion='" + descripcion + '\'' +
-                ", ean13=" + ean13 +
+                ", ean=" + ean +
                 ", keyRFID='" + keyRFID + '\'' +
                 ", idCategoria=" + idCategoria +
                 '}';

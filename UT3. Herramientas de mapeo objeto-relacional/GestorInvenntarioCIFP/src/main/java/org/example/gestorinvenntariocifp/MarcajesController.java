@@ -1,5 +1,4 @@
 package org.example.gestorinvenntariocifp;
-
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -21,7 +20,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.stream.Collectors;
-
 public class MarcajesController {
 
     @FXML
@@ -60,6 +58,9 @@ public class MarcajesController {
     @FXML
     private Button btnAtras;
 
+    @FXML
+    private Button btnEliminar;
+
     private ObservableList<Marcaje> marcajesObservableList = FXCollections.observableArrayList();
 
     @FXML
@@ -70,23 +71,11 @@ public class MarcajesController {
         colTipo.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getTipoDescripcion()));
         colTimestamp.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getFormattedTimeStamp()));
 
-        tablaMarcajes.setEditable(true);
-        colTipo.setCellFactory(TextFieldTableCell.forTableColumn());
-        colTipo.setOnEditCommit(event -> {
-            Marcaje marcaje = event.getRowValue();
-            try {
-                int nuevoTipo = Integer.parseInt(event.getNewValue());
-                marcaje.setTipo(nuevoTipo);
-                actualizarMarcajeEnBD(marcaje);
-            } catch (NumberFormatException e) {
-                mostrarAlerta("Error", "El valor ingresado no es un número válido para el tipo.", Alert.AlertType.ERROR);
-            }
-        });
-
         cargarDatosMarcajes();
         btnBuscar.setOnAction(event -> aplicarFiltros());
         btnNuevoMarcaje.setOnAction(event -> abrirVistaNuevoMarcaje());
         btnAtras.setOnAction(event -> volverAlMenu());
+        btnEliminar.setOnAction(event -> eliminarMarcajeSeleccionado());
     }
 
     private void cargarDatosMarcajes() {
@@ -94,7 +83,8 @@ public class MarcajesController {
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
 
-        try (SessionFactory sessionFactory = configuration.buildSessionFactory(); Session session = sessionFactory.openSession()) {
+        try (SessionFactory sessionFactory = configuration.buildSessionFactory();
+             Session session = sessionFactory.openSession()) {
             List<Marcaje> marcajes = session.createQuery("from Marcaje", Marcaje.class).list();
             marcajesObservableList.addAll(marcajes);
         } catch (Exception e) {
@@ -105,16 +95,26 @@ public class MarcajesController {
         tablaMarcajes.setItems(marcajesObservableList);
     }
 
-    private void actualizarMarcajeEnBD(Marcaje marcaje) {
-        Configuration configuration = new Configuration();
-        configuration.configure("hibernate.cfg.xml");
+    private void eliminarMarcajeSeleccionado() {
+        Marcaje marcajeSeleccionado = tablaMarcajes.getSelectionModel().getSelectedItem();
+        if (marcajeSeleccionado == null) {
+            mostrarAlerta("Advertencia", "Debe seleccionar un marcaje para eliminar.", Alert.AlertType.WARNING);
+            return;
+        }
 
-        try (SessionFactory sessionFactory = configuration.buildSessionFactory(); Session session = sessionFactory.openSession()) {
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+
+        try (SessionFactory sessionFactory = configuration.buildSessionFactory();
+             Session session = sessionFactory.openSession()) {
             session.beginTransaction();
-            session.update(marcaje);
-            session.getTransaction().commit();
+            Marcaje marcaje = session.get(Marcaje.class, marcajeSeleccionado.getId());
+            if (marcaje != null) {
+                session.delete(marcaje);
+                session.getTransaction().commit();
+                marcajesObservableList.remove(marcajeSeleccionado);
+            }
         } catch (Exception e) {
-            mostrarAlerta("Error", "No se pudo actualizar el marcaje.", Alert.AlertType.ERROR);
+            mostrarAlerta("Error", "No se pudo eliminar el marcaje.", Alert.AlertType.ERROR);
             e.printStackTrace();
         }
     }
@@ -147,8 +147,7 @@ public class MarcajesController {
                             return !fechaMarcaje.isAfter(hasta);
                         }
                         return true;
-                    } catch (DateTimeParseException e) {
-                        System.err.println("Formato de fecha inválido: " + fechaStr);
+                    } catch (Exception e) {
                         return false;
                     }
                 })
@@ -189,3 +188,13 @@ public class MarcajesController {
         alerta.showAndWait();
     }
 }
+
+
+
+
+
+
+
+
+
+
