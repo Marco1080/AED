@@ -1,57 +1,65 @@
 package org.example.gestorinvenntariocifp.modelos;
 
+import jakarta.persistence.*;
 import javafx.beans.property.*;
 
+@Entity
+@Table(name = "categoria")
 public class Categoria {
-    private final IntegerProperty id;
-    private final StringProperty nombre;
-    private final IntegerProperty productosAsociados;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "IdCategoria")
+    private int id;
+
+    @Column(name = "Nombre", nullable = false)
+    private String nombre;
+
+    @Transient
+    private int productosAsociados;
 
     public Categoria() {
-        this.id = new SimpleIntegerProperty();
-        this.nombre = new SimpleStringProperty();
-        this.productosAsociados = new SimpleIntegerProperty(0);
     }
 
     public Categoria(int id, String nombre, int productosAsociados) {
-        this.id = new SimpleIntegerProperty(id);
-        this.nombre = new SimpleStringProperty(nombre);
-        this.productosAsociados = new SimpleIntegerProperty(productosAsociados);
+        this.id = id;
+        this.nombre = nombre;
+        this.productosAsociados = productosAsociados;
     }
 
     public int getId() {
-        return id.get();
-    }
-
-    public void setId(int id) {
-        this.id.set(id);
-    }
-
-    public IntegerProperty idProperty() {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getNombre() {
-        return nombre.get();
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre.set(nombre);
-    }
-
-    public StringProperty nombreProperty() {
         return nombre;
     }
 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     public int getProductosAsociados() {
-        return productosAsociados.get();
+        return productosAsociados;
     }
 
     public void setProductosAsociados(int productosAsociados) {
-        this.productosAsociados.set(productosAsociados);
+        this.productosAsociados = productosAsociados;
+    }
+
+    public IntegerProperty idProperty() {
+        return new SimpleIntegerProperty(id);
+    }
+
+    public StringProperty nombreProperty() {
+        return new SimpleStringProperty(nombre);
     }
 
     public IntegerProperty productosAsociadosProperty() {
-        return productosAsociados;
+        return new SimpleIntegerProperty(productosAsociados);
     }
 }
