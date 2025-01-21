@@ -41,12 +41,22 @@ public class AulasController {
     private Button btnAtras;
 
     @FXML
+    private Button btnCrear;
+
+    @FXML
+    private Button btnEliminar;
+
+    private ObservableList<Aula> aulasObservableList = FXCollections.observableArrayList();
+
+    @FXML
     public void initialize() {
         configurarColumnas();
         cargarAulas();
 
         btnRecargar.setOnAction(event -> cargarAulas());
         btnAtras.setOnAction(event -> volverAlMenu());
+        btnCrear.setOnAction(event -> crearAula());
+        btnEliminar.setOnAction(event -> eliminarAulaSeleccionada());
     }
 
     private void configurarColumnas() {
@@ -57,7 +67,7 @@ public class AulasController {
     }
 
     private void cargarAulas() {
-        ObservableList<Aula> aulasObservableList = FXCollections.observableArrayList();
+        aulasObservableList.clear();
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
 
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
@@ -78,6 +88,39 @@ public class AulasController {
             Scene menuScene = new Scene(fxmlLoader.load());
             stage.setScene(menuScene);
         } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void crearAula() {
+        try {
+            Stage stage = (Stage) tablaAulas.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("crear-aula-view.fxml"));
+            Scene crearScene = new Scene(fxmlLoader.load());
+            stage.setScene(crearScene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void eliminarAulaSeleccionada() {
+        Aula aulaSeleccionada = tablaAulas.getSelectionModel().getSelectedItem();
+        if (aulaSeleccionada == null) {
+            return;
+        }
+
+        Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
+
+        try (SessionFactory sessionFactory = configuration.buildSessionFactory();
+             Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            Aula aula = session.get(Aula.class, aulaSeleccionada.getId());
+            if (aula != null) {
+                session.delete(aula);
+                session.getTransaction().commit();
+                tablaAulas.getItems().remove(aulaSeleccionada);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

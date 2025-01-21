@@ -104,11 +104,11 @@ public class CategoriaController {
             if (categoria != null) {
                 session.delete(categoria);
                 session.getTransaction().commit();
+                categoriasObservableList.remove(categoriaSeleccionada);
                 mostrarAlerta("Éxito", "Categoría eliminada exitosamente. Los productos ahora no tienen categoría.", Alert.AlertType.INFORMATION);
             } else {
                 mostrarAlerta("Error", "No se encontró la categoría seleccionada en la base de datos.", Alert.AlertType.ERROR);
             }
-            cargarCategorias();
         } catch (Exception e) {
             mostrarAlerta("Error", "No se pudo eliminar la categoría debido a un error inesperado.", Alert.AlertType.ERROR);
             e.printStackTrace();
@@ -116,12 +116,6 @@ public class CategoriaController {
     }
 
     private void actualizarCategoriaSeleccionada() {
-        Categoria categoriaSeleccionada = tablaCategorias.getSelectionModel().getSelectedItem();
-        if (categoriaSeleccionada == null) {
-            mostrarAlerta("Advertencia", "Debe seleccionar una categoría para actualizar.", Alert.AlertType.WARNING);
-            return;
-        }
-        mostrarAlerta("Pendiente", "Funcionalidad de actualizar categoría aún no implementada.", Alert.AlertType.INFORMATION);
     }
 
     private void volverAlMenu() {
