@@ -9,13 +9,16 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import org.example.gestorinvenntariocifp.modelos.Aula;
+import org.example.gestorinvenntariocifp.modelos.Categoria;
 import org.example.gestorinvenntariocifp.modelos.Producto;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NuevoProductoController {
 
@@ -63,6 +66,7 @@ public class NuevoProductoController {
 
     private ObservableList<String> numeracionesAulasObservableList = FXCollections.observableArrayList();
     private ObservableList<String> categoriasObservableList = FXCollections.observableArrayList();
+    private Map<String, Integer> categoriasMap = new HashMap<>(); // Mapa para almacenar categorías con sus IDs
 
     @FXML
     public void initialize() {
@@ -96,6 +100,7 @@ public class NuevoProductoController {
 
     private void cargarCategorias() {
         categoriasObservableList.clear();
+        categoriasMap.clear();
 
         Configuration configuration = new Configuration();
         configuration.configure("hibernate.cfg.xml");
@@ -106,7 +111,10 @@ public class NuevoProductoController {
                     "SELECT c.IdCategoria, c.Nombre FROM categoria c"
             ).list();
             for (Object[] categoria : categorias) {
-                categoriasObservableList.add((String) categoria[1]);
+                String nombreCategoria = (String) categoria[1];
+                int idCategoria = ((Number) categoria[0]).intValue();
+                categoriasObservableList.add(nombreCategoria);
+                categoriasMap.put(nombreCategoria, idCategoria); // Guardar el ID asociado al nombre
             }
         } catch (Exception e) {
             mostrarAlerta("Error", "No se pudieron cargar las categorías.", Alert.AlertType.ERROR);
@@ -155,7 +163,10 @@ public class NuevoProductoController {
             nuevoProducto.setKeyRFID(rfid);
 
             if (categoriaSeleccionada != null) {
-                nuevoProducto.setDescripcion(descripcion);
+                Integer idCategoria = categoriasMap.get(categoriaSeleccionada);
+                Categoria categoria = new Categoria();
+                categoria.setId(idCategoria);
+                nuevoProducto.setCategoria(categoria); // Asociar categoría al producto
             }
 
             guardarEnBaseDatos(nuevoProducto);

@@ -18,7 +18,7 @@
             <columns>
                 <TableColumn fx:id="colIdCategoria" prefWidth="150.0" text="ID" />
                 <TableColumn fx:id="colNombreCategoria" prefWidth="300.0" text="Nombre" />
-                <TableColumn fx:id="colProductosAsociados" prefWidth="250.0" text="Número de productos asociados" />
+                <TableColumn fx:id="colProductosAsociados" prefWidth="250.0" text="Total" />
             </columns>
         </TableView>
 

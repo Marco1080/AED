@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.gestorinvenntariocifp.NuevaCategoriaController"
+            prefHeight="400.0" prefWidth="600.0"
+            style="-fx-background-color: #f8f9fa;">
+    <VBox alignment="CENTER" spacing="15.0" prefHeight="200.0" prefWidth="400.0"
+          style="-fx-background-color: white; -fx-padding: 20; -fx-border-color: #ced4da; -fx-border-radius: 10; -fx-background-radius: 10;"
+          AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="100.0" AnchorPane.bottomAnchor="100.0">
+        <Label text="Crear Nueva Categoría" style="-fx-font-size: 20px; -fx-font-weight: bold;" />
+        <Label fx:id="lblError" text="Error message" style="-fx-text-fill: red;" visible="false" />
+        <TextField fx:id="txtNombre" promptText="Nombre de la Categoría" style="-fx-background-color: #e9ecef; -fx-padding: 10; -fx-border-color: #ced4da; -fx-border-radius: 5;" />
+        <HBox spacing="20.0" alignment="CENTER">
+            <Button fx:id="btnGuardar" text="Guardar" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5;" />
+            <Button fx:id="btnCancelar" text="Cancelar" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5;" />
+        </HBox>
+    </VBox>
+</AnchorPane>
