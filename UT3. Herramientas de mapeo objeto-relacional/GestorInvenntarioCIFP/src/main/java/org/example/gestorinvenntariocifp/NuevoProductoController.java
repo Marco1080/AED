@@ -155,7 +155,7 @@ public class NuevoProductoController {
             nuevoProducto.setKeyRFID(rfid);
 
             if (categoriaSeleccionada != null) {
-                nuevoProducto.setDescripcion(descripcion + " - Categoría: " + categoriaSeleccionada);
+                nuevoProducto.setDescripcion(descripcion);
             }
 
             guardarEnBaseDatos(nuevoProducto);

@@ -7,14 +7,15 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class
-HelloApplication extends Application {
+public class HelloApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("menu-view.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 800, 600);
+        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("nuevoProducto-view.fxml"));
+        Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("Inventario");
+
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.centerOnScreen();
         stage.show();
     }

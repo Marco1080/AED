@@ -56,31 +56,36 @@ public class CategoriaController {
     }
 
     private void cargarCategorias() {
-        categoriasObservableList.clear();
+        categoriasObservableList.clear(); // Limpiar la lista observable para evitar duplicados
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
 
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
+            // Consulta SQL para obtener categorías y el conteo de productos asociados
             List<Object[]> categorias = session.createNativeQuery(
-                    "SELECT c.IdCategoria, c.Nombre, COUNT(p.IdProducto) " +
-                            "FROM categoria c LEFT JOIN productos p ON c.IdCategoria = p.IdCategoria " +
+                    "SELECT c.IdCategoria, c.Nombre, COUNT(p.IdProducto) AS TotalProductos " +
+                            "FROM categoria c LEFT JOIN producto p ON c.IdCategoria = p.IdCategoria " +
                             "GROUP BY c.IdCategoria, c.Nombre"
             ).list();
 
+            // Procesar resultados
             for (Object[] categoria : categorias) {
-                Categoria nuevaCategoria = new Categoria(
-                        (Integer) categoria[0],
-                        (String) categoria[1],
-                        ((Number) categoria[2]).intValue()
-                );
+                int id = (Integer) categoria[0];
+                String nombre = (String) categoria[1];
+                int productosAsociados = ((Number) categoria[2]).intValue();
+
+                // Crear instancia de Categoria y agregarla a la lista observable
+                Categoria nuevaCategoria = new Categoria(id, nombre, productosAsociados);
                 categoriasObservableList.add(nuevaCategoria);
             }
+
+            // Configurar los datos en la tabla
+            tablaCategorias.setItems(categoriasObservableList);
+
         } catch (Exception e) {
-            mostrarAlerta("Error", "No se pudieron cargar las categorías.", Alert.AlertType.ERROR);
+            mostrarAlerta("Error", "No se pudieron cargar las categorías. Verifica la base de datos.", Alert.AlertType.ERROR);
             e.printStackTrace();
         }
-
-        tablaCategorias.setItems(categoriasObservableList);
     }
 
     private void eliminarCategoriaSeleccionada() {
@@ -95,17 +100,22 @@ public class CategoriaController {
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
             session.beginTransaction();
+
+            // Eliminar relación de productos con la categoría
             session.createNativeQuery(
-                            "UPDATE productos SET IdCategoria = NULL WHERE IdCategoria = :idCategoria"
-                    )
-                    .setParameter("idCategoria", categoriaSeleccionada.getId())
+                            "UPDATE producto SET IdCategoria = NULL WHERE IdCategoria = :idCategoria"
+                    ).setParameter("idCategoria", categoriaSeleccionada.getId())
                     .executeUpdate();
+
+            // Eliminar la categoría
             Categoria categoria = session.get(Categoria.class, categoriaSeleccionada.getId());
             if (categoria != null) {
                 session.delete(categoria);
                 session.getTransaction().commit();
+
+                // Actualizar la tabla
                 categoriasObservableList.remove(categoriaSeleccionada);
-                mostrarAlerta("Éxito", "Categoría eliminada exitosamente. Los productos ahora no tienen categoría.", Alert.AlertType.INFORMATION);
+                mostrarAlerta("Éxito", "Categoría eliminada exitosamente.", Alert.AlertType.INFORMATION);
             } else {
                 mostrarAlerta("Error", "No se encontró la categoría seleccionada en la base de datos.", Alert.AlertType.ERROR);
             }
@@ -116,6 +126,7 @@ public class CategoriaController {
     }
 
     private void actualizarCategoriaSeleccionada() {
+        mostrarAlerta("Información", "Funcionalidad no implementada todavía.", Alert.AlertType.INFORMATION);
     }
 
     private void volverAlMenu() {

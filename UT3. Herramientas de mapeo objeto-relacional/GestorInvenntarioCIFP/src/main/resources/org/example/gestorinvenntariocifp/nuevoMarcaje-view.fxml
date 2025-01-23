@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.gestorinvenntariocifp.NuevoMarcajeController"
+            prefHeight="400.0" prefWidth="600.0">
+    <VBox alignment="CENTER" spacing="20" prefWidth="400.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0">
+        <Label text="Nuevo marcaje" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
+        <ComboBox fx:id="productoComboBox" promptText="Selecciona un producto" />
+        <ComboBox fx:id="aulaComboBox" promptText="Selecciona un aula" />
+        <ComboBox fx:id="tipoComboBox" promptText="Selecciona el tipo (Entrada o Salida)" />
+        <Button text="Crear Marcaje" onAction="#handleCrearMarcaje"
+                style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-padding: 10px 20px;" />
+        <Label fx:id="feedbackLabel" style="-fx-font-size: 14px;" />
+    </VBox>
+</AnchorPane>

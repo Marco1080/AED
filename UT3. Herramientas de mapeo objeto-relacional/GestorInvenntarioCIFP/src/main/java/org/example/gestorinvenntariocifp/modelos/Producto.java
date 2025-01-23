@@ -3,8 +3,9 @@ package org.example.gestorinvenntariocifp.modelos;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "productos", schema = "inventario")
+@Table(name = "producto")
 public class Producto {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "IdProducto", nullable = false)
@@ -14,13 +15,14 @@ public class Producto {
     private String descripcion;
 
     @Column(name = "EAN13", nullable = false)
-    private int ean;
+    private int ean13;
 
     @Column(name = "keyRFID", nullable = false, length = 10)
     private String keyRFID;
 
-    @Column(name = "IdCategoria", nullable = true)
-    private Integer idCategoria;
+    @ManyToOne
+    @JoinColumn(name = "IdCategoria")
+    private Categoria categoria;
 
     public Integer getId() {
         return id;
@@ -39,11 +41,11 @@ public class Producto {
     }
 
     public int getEan13() {
-        return ean;
+        return ean13;
     }
 
-    public void setEan13(int ean) {
-        this.ean = ean;
+    public void setEan13(int ean13) {
+        this.ean13 = ean13;
     }
 
     public String getKeyRFID() {
@@ -54,22 +56,18 @@ public class Producto {
         this.keyRFID = keyRFID;
     }
 
-    public Integer getIdCategoria() {
-        return idCategoria;
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
     }
 
     public void setIdCategoria(Integer idCategoria) {
-        this.idCategoria = idCategoria;
-    }
-
-    @Override
-    public String toString() {
-        return "Producto{" +
-                "id=" + id +
-                ", descripcion='" + descripcion + '\'' +
-                ", ean=" + ean +
-                ", keyRFID='" + keyRFID + '\'' +
-                ", idCategoria=" + idCategoria +
-                '}';
+        if (this.categoria == null) {
+            this.categoria = new Categoria();
+        }
+        this.categoria.setId(idCategoria);
     }
 }

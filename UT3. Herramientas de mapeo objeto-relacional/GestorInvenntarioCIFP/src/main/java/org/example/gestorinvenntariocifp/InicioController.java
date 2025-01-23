@@ -81,14 +81,14 @@ public class InicioController {
 
             Producto producto1 = new Producto();
             producto1.setDescripcion("Laptop HP");
-            producto1.setEan13(1321312);
+            producto1.setEan13(13213);
             producto1.setKeyRFID("RF123456");
             producto1.setIdCategoria(categoria1.getId());
             session.save(producto1);
 
             Producto producto2 = new Producto();
             producto2.setDescripcion("Mesa de oficina");
-            producto2.setEan13(98765432);
+            producto2.setEan13(9876);
             producto2.setKeyRFID("RF987654");
             producto2.setIdCategoria(categoria2.getId());
             session.save(producto2);

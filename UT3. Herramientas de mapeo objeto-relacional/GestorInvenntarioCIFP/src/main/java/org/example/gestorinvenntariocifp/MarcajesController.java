@@ -1,11 +1,11 @@
 package org.example.gestorinvenntariocifp;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import org.example.gestorinvenntariocifp.modelos.Marcaje;
@@ -17,9 +17,9 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 import java.util.List;
 import java.util.stream.Collectors;
+
 public class MarcajesController {
 
     @FXML
@@ -65,13 +65,33 @@ public class MarcajesController {
 
     @FXML
     public void initialize() {
+        // Configurar columnas
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
-        colProducto.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getIdProducto().getDescripcion()));
-        colAula.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getIdAula().getDescripcion()));
-        colTipo.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getTipoDescripcion()));
-        colTimestamp.setCellValueFactory(cellData -> javafx.beans.binding.Bindings.createObjectBinding(() -> cellData.getValue().getFormattedTimeStamp()));
+        colProducto.setCellValueFactory(cellData ->
+                javafx.beans.binding.Bindings.createObjectBinding(() ->
+                        cellData.getValue().getIdProducto().getDescripcion() // Solo el nombre del producto
+                )
+        );
+        colAula.setCellValueFactory(cellData ->
+                javafx.beans.binding.Bindings.createObjectBinding(() ->
+                        cellData.getValue().getIdAula().getDescripcion()
+                )
+        );
+        colTipo.setCellValueFactory(cellData ->
+                javafx.beans.binding.Bindings.createObjectBinding(() ->
+                        cellData.getValue().getTipoDescripcion()
+                )
+        );
+        colTimestamp.setCellValueFactory(cellData ->
+                javafx.beans.binding.Bindings.createObjectBinding(() ->
+                        cellData.getValue().getFormattedTimeStamp()
+                )
+        );
 
+        // Cargar datos iniciales
         cargarDatosMarcajes();
+
+        // Configurar acciones de botones
         btnBuscar.setOnAction(event -> aplicarFiltros());
         btnNuevoMarcaje.setOnAction(event -> abrirVistaNuevoMarcaje());
         btnAtras.setOnAction(event -> volverAlMenu());
@@ -132,7 +152,8 @@ public class MarcajesController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
         List<Marcaje> filtrados = marcajesObservableList.stream()
-                .filter(marcaje -> filtroDescripcion.isEmpty() || marcaje.getIdProducto().getDescripcion().toLowerCase().contains(filtroDescripcion))
+                .filter(marcaje -> filtroDescripcion.isEmpty() ||
+                        marcaje.getIdProducto().getDescripcion().toLowerCase().contains(filtroDescripcion))
                 .filter(marcaje -> {
                     String fechaStr = marcaje.getFormattedTimeStamp();
                     try {
@@ -159,7 +180,7 @@ public class MarcajesController {
     private void abrirVistaNuevoMarcaje() {
         try {
             Stage stage = (Stage) btnNuevoMarcaje.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevo-marcaje-view.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevoMarcaje-view.fxml"));
             Scene nuevoMarcajeScene = new Scene(fxmlLoader.load());
             stage.setScene(nuevoMarcajeScene);
         } catch (IOException e) {
@@ -188,13 +209,3 @@ public class MarcajesController {
         alerta.showAndWait();
     }
 }
-
-
-
-
-
-
-
-
-
-
