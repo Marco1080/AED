@@ -62,4 +62,5 @@ public class Categoria {
     public IntegerProperty productosAsociadosProperty() {
         return new SimpleIntegerProperty(productosAsociados);
     }
+
 }

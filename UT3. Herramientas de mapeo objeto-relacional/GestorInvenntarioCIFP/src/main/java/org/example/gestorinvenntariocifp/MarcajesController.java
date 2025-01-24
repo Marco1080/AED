@@ -65,6 +65,31 @@ public class MarcajesController {
 
     @FXML
     public void initialize() {
+        configurarColumnas();
+        cargarDatosMarcajes();
+    }
+
+    @FXML
+    private void handleBuscar() {
+        aplicarFiltros();
+    }
+
+    @FXML
+    private void handleNuevoMarcaje() {
+        abrirVistaNuevoMarcaje();
+    }
+
+    @FXML
+    private void handleAtras() {
+        volverAlMenu();
+    }
+
+    @FXML
+    private void handleEliminar() {
+        eliminarMarcajeSeleccionado();
+    }
+
+    private void configurarColumnas() {
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colProducto.setCellValueFactory(cellData ->
                 javafx.beans.binding.Bindings.createObjectBinding(() ->
@@ -86,15 +111,6 @@ public class MarcajesController {
                         cellData.getValue().getFormattedTimeStamp()
                 )
         );
-
-        // Cargar datos iniciales
-        cargarDatosMarcajes();
-
-        // Configurar acciones de botones
-        btnBuscar.setOnAction(event -> aplicarFiltros());
-        btnNuevoMarcaje.setOnAction(event -> abrirVistaNuevoMarcaje());
-        btnAtras.setOnAction(event -> volverAlMenu());
-        btnEliminar.setOnAction(event -> eliminarMarcajeSeleccionado());
     }
 
     private void cargarDatosMarcajes() {

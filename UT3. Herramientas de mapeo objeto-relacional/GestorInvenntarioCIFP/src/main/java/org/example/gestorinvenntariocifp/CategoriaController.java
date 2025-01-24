@@ -39,7 +39,7 @@ public class CategoriaController {
     private Button btnVolverMenu;
 
     @FXML
-    private Button btnCrearCategoria; // Nuevo botón
+    private Button btnCrearCategoria;
 
     private ObservableList<Categoria> categoriasObservableList = FXCollections.observableArrayList();
 
@@ -47,10 +47,6 @@ public class CategoriaController {
     public void initialize() {
         configurarColumnas();
         cargarCategorias();
-        btnEliminarCategoria.setOnAction(event -> eliminarCategoriaSeleccionada());
-        btnActualizarCategoria.setOnAction(event -> actualizarCategoriaSeleccionada());
-        btnVolverMenu.setOnAction(event -> volverAlMenu());
-        btnCrearCategoria.setOnAction(event -> irANuevaCategoria()); // Acción para el nuevo botón
     }
 
     private void configurarColumnas() {
@@ -87,7 +83,7 @@ public class CategoriaController {
             e.printStackTrace();
         }
     }
-
+    @FXML
     private void eliminarCategoriaSeleccionada() {
         Categoria categoriaSeleccionada = tablaCategorias.getSelectionModel().getSelectedItem();
         if (categoriaSeleccionada == null) {
@@ -124,7 +120,7 @@ public class CategoriaController {
     private void actualizarCategoriaSeleccionada() {
         mostrarAlerta("Información", "Funcionalidad no implementada todavía.", Alert.AlertType.INFORMATION);
     }
-
+    @FXML
     private void volverAlMenu() {
         try {
             Stage stage = (Stage) btnVolverMenu.getScene().getWindow();
@@ -136,7 +132,7 @@ public class CategoriaController {
             e.printStackTrace();
         }
     }
-
+    @FXML
     private void irANuevaCategoria() {
         try {
             Stage stage = (Stage) btnCrearCategoria.getScene().getWindow();
