@@ -85,11 +85,17 @@ public class MenuController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(vista));
             AnchorPane nuevaVista = loader.load();
+
             vistaPrincipal.getChildren().setAll(nuevaVista);
+            AnchorPane.setTopAnchor(nuevaVista, 0.0);
+            AnchorPane.setBottomAnchor(nuevaVista, 0.0);
+            AnchorPane.setLeftAnchor(nuevaVista, 0.0);
+            AnchorPane.setRightAnchor(nuevaVista, 0.0);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     private void exportarAPDF() {
     }
@@ -110,8 +116,15 @@ public class MenuController {
     private void alternarModoNocturno() {
         if (menuModoNocturno.isSelected()) {
             vistaPrincipal.setStyle("-fx-background-color: #2b2b2b;");
+            vistaPrincipal.lookupAll(".vbox").forEach(node -> node.setStyle("-fx-background-color: #3c3f41; -fx-text-fill: white;"));
+            vistaPrincipal.lookupAll(".table-view").forEach(node -> node.setStyle("-fx-background-color: #3c3f41; -fx-border-color: #555555;"));
+            vistaPrincipal.lookupAll(".button").forEach(node -> node.setStyle("-fx-background-color: #555555; -fx-text-fill: white;"));
         } else {
             vistaPrincipal.setStyle("-fx-background-color: #ffffff;");
+            vistaPrincipal.lookupAll(".vbox").forEach(node -> node.setStyle("-fx-background-color: #ffffff; -fx-text-fill: black;"));
+            vistaPrincipal.lookupAll(".table-view").forEach(node -> node.setStyle("-fx-background-color: #ffffff; -fx-border-color: #ced4da;"));
+            vistaPrincipal.lookupAll(".button").forEach(node -> node.setStyle("-fx-background-color: #007bff; -fx-text-fill: white;"));
         }
     }
+
 }

@@ -4,10 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import org.example.gestorinvenntariocifp.modelos.Producto;
@@ -54,6 +51,9 @@ public class ProductosController {
     @FXML
     private Button btnEliminar;
 
+    @FXML
+    private CheckBox chkSinCategoria; // Checkbox para filtrar productos sin categoría
+
     private ObservableList<Producto> productosObservableList = FXCollections.observableArrayList();
 
     @FXML
@@ -68,6 +68,7 @@ public class ProductosController {
         btnAnadirProducto.setOnAction(event -> abrirVistaNuevoProducto());
         btnAtras.setOnAction(event -> volverAlMenu());
         btnEliminar.setOnAction(event -> eliminarProductoSeleccionado());
+        chkSinCategoria.setOnAction(event -> filtrarProductosSinCategoria());
     }
 
     private void cargarProductos() {
@@ -95,6 +96,17 @@ public class ProductosController {
                             producto.getDescripcion().toLowerCase().contains(filtro))
                     .collect(Collectors.toList());
             tablaProductos.setItems(FXCollections.observableArrayList(filtrados));
+        }
+    }
+
+    private void filtrarProductosSinCategoria() {
+        if (chkSinCategoria.isSelected()) {
+            List<Producto> sinCategoria = productosObservableList.stream()
+                    .filter(producto -> producto.getCategoria() == null) // Filtrar productos con categoría null
+                    .collect(Collectors.toList());
+            tablaProductos.setItems(FXCollections.observableArrayList(sinCategoria));
+        } else {
+            tablaProductos.setItems(productosObservableList); // Restaurar todos los productos
         }
     }
 

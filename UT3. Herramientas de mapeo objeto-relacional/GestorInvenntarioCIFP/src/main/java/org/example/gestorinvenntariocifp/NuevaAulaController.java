@@ -2,6 +2,7 @@ package org.example.gestorinvenntariocifp;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -53,7 +54,7 @@ public class NuevaAulaController {
 
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
-            // Verificar si ya existe un aula con la misma descripción, numeración o IP
+
             List<Aula> aulasExistentes = session.createQuery("from Aula", Aula.class).list();
             for (Aula aula : aulasExistentes) {
                 if (aula.getDescripcion().equalsIgnoreCase(descripcion)) {
@@ -69,8 +70,6 @@ public class NuevaAulaController {
                     return;
                 }
             }
-
-            // Crear nueva aula
             Aula nuevaAula = new Aula();
             nuevaAula.setNumeracion(numeracion);
             nuevaAula.setDescripcion(descripcion);
@@ -91,13 +90,16 @@ public class NuevaAulaController {
     private void volverAAulas() {
         try {
             Stage stage = (Stage) btnCancelar.getScene().getWindow();
-            AnchorPane aulasVista = FXMLLoader.load(getClass().getResource("aulas-view.fxml"));
-            stage.getScene().setRoot(aulasVista);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("aulas-view.fxml"));
+            Scene aulasScene = new Scene(fxmlLoader.load(), 800, 600);
+            stage.setScene(aulasScene);
+            stage.centerOnScreen();
         } catch (Exception e) {
             mostrarError("No se pudo volver a la vista de aulas.");
             e.printStackTrace();
         }
     }
+
 
     private void mostrarError(String mensaje) {
         lblError.setText(mensaje);

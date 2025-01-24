@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -11,7 +12,7 @@
 
 <AnchorPane fx:id="vistaPrincipal" prefHeight="850.0" prefWidth="800.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.gestorinvenntariocifp.ProductosController">
     <VBox alignment="CENTER" spacing="20.0" style="-fx-padding: 20; -fx-background-color: #ffffff; -fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;"
-          AnchorPane.topAnchor="50.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+          AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <Label style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #495057;" text="Productos" />
         <HBox alignment="CENTER" spacing="10.0" style="-fx-padding: 10;">
             <Button fx:id="btnAtras" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Atrás" />
@@ -20,6 +21,7 @@
             <Button fx:id="btnAnadirProducto" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Añadir producto" />
             <Button fx:id="btnEliminar" style="-fx-background-color: #ffc107; -fx-text-fill: black; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Eliminar producto" />
         </HBox>
+        <CheckBox fx:id="chkSinCategoria" text="Solo sin categoría" style="-fx-font-size: 14; -fx-text-fill: #495057;" alignment="CENTER" VBox.vgrow="NEVER" />
         <TableView fx:id="tablaProductos" style="-fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;"
                    VBox.vgrow="ALWAYS">
             <columns>
@@ -31,4 +33,3 @@
         </TableView>
     </VBox>
 </AnchorPane>
-

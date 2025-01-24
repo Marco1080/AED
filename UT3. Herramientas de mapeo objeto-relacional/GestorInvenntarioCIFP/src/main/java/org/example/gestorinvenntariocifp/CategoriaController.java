@@ -38,6 +38,9 @@ public class CategoriaController {
     @FXML
     private Button btnVolverMenu;
 
+    @FXML
+    private Button btnCrearCategoria; // Nuevo botón
+
     private ObservableList<Categoria> categoriasObservableList = FXCollections.observableArrayList();
 
     @FXML
@@ -47,6 +50,7 @@ public class CategoriaController {
         btnEliminarCategoria.setOnAction(event -> eliminarCategoriaSeleccionada());
         btnActualizarCategoria.setOnAction(event -> actualizarCategoriaSeleccionada());
         btnVolverMenu.setOnAction(event -> volverAlMenu());
+        btnCrearCategoria.setOnAction(event -> irANuevaCategoria()); // Acción para el nuevo botón
     }
 
     private void configurarColumnas() {
@@ -56,30 +60,26 @@ public class CategoriaController {
     }
 
     private void cargarCategorias() {
-        categoriasObservableList.clear(); // Limpiar la lista observable para evitar duplicados
+        categoriasObservableList.clear();
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
 
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
-            // Consulta SQL para obtener categorías y el conteo de productos asociados
             List<Object[]> categorias = session.createNativeQuery(
                     "SELECT c.IdCategoria, c.Nombre, COUNT(p.IdProducto) AS TotalProductos " +
                             "FROM categoria c LEFT JOIN producto p ON c.IdCategoria = p.IdCategoria " +
                             "GROUP BY c.IdCategoria, c.Nombre"
             ).list();
 
-            // Procesar resultados
             for (Object[] categoria : categorias) {
                 int id = (Integer) categoria[0];
                 String nombre = (String) categoria[1];
                 int productosAsociados = ((Number) categoria[2]).intValue();
 
-                // Crear instancia de Categoria y agregarla a la lista observable
                 Categoria nuevaCategoria = new Categoria(id, nombre, productosAsociados);
                 categoriasObservableList.add(nuevaCategoria);
             }
 
-            // Configurar los datos en la tabla
             tablaCategorias.setItems(categoriasObservableList);
 
         } catch (Exception e) {
@@ -101,19 +101,15 @@ public class CategoriaController {
              Session session = sessionFactory.openSession()) {
             session.beginTransaction();
 
-            // Eliminar relación de productos con la categoría
             session.createNativeQuery(
-                            "UPDATE producto SET IdCategoria = NULL WHERE IdCategoria = :idCategoria"
-                    ).setParameter("idCategoria", categoriaSeleccionada.getId())
-                    .executeUpdate();
+                    "UPDATE producto SET IdCategoria = NULL WHERE IdCategoria = :idCategoria"
+            ).setParameter("idCategoria", categoriaSeleccionada.getId()).executeUpdate();
 
-            // Eliminar la categoría
             Categoria categoria = session.get(Categoria.class, categoriaSeleccionada.getId());
             if (categoria != null) {
                 session.delete(categoria);
                 session.getTransaction().commit();
 
-                // Actualizar la tabla
                 categoriasObservableList.remove(categoriaSeleccionada);
                 mostrarAlerta("Éxito", "Categoría eliminada exitosamente.", Alert.AlertType.INFORMATION);
             } else {
@@ -137,6 +133,18 @@ public class CategoriaController {
             stage.setScene(menuScene);
         } catch (IOException e) {
             mostrarAlerta("Error", "No se pudo cargar la vista del menú.", Alert.AlertType.ERROR);
+            e.printStackTrace();
+        }
+    }
+
+    private void irANuevaCategoria() {
+        try {
+            Stage stage = (Stage) btnCrearCategoria.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("NuevaCategoria-view.fxml"));
+            Scene nuevaCategoriaScene = new Scene(fxmlLoader.load());
+            stage.setScene(nuevaCategoriaScene);
+        } catch (IOException e) {
+            mostrarAlerta("Error", "No se pudo cargar la vista para crear una nueva categoría.", Alert.AlertType.ERROR);
             e.printStackTrace();
         }
     }

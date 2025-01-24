@@ -66,7 +66,7 @@ public class NuevoProductoController {
 
     private ObservableList<String> numeracionesAulasObservableList = FXCollections.observableArrayList();
     private ObservableList<String> categoriasObservableList = FXCollections.observableArrayList();
-    private Map<String, Integer> categoriasMap = new HashMap<>(); // Mapa para almacenar categorías con sus IDs
+    private Map<String, Integer> categoriasMap = new HashMap<>();
 
     @FXML
     public void initialize() {
@@ -114,7 +114,7 @@ public class NuevoProductoController {
                 String nombreCategoria = (String) categoria[1];
                 int idCategoria = ((Number) categoria[0]).intValue();
                 categoriasObservableList.add(nombreCategoria);
-                categoriasMap.put(nombreCategoria, idCategoria); // Guardar el ID asociado al nombre
+                categoriasMap.put(nombreCategoria, idCategoria);
             }
         } catch (Exception e) {
             mostrarAlerta("Error", "No se pudieron cargar las categorías.", Alert.AlertType.ERROR);
@@ -149,12 +149,14 @@ public class NuevoProductoController {
         Integer cantidadStock = spinnerCantidad.getValue();
         Double precioUnitario = sliderPrecio.getValue();
 
+        // Validar los campos obligatorios (excepto categoría y notas)
         if (descripcion.isEmpty() || ean13Text.isEmpty() || rfid.isEmpty() || numeracionSeleccionada == null || cantidadStock == null || precioUnitario == null) {
-            mostrarAlerta("Campos Obligatorios", "Todos los campos son obligatorios, excepto la categoría.", Alert.AlertType.WARNING);
+            mostrarAlerta("Campos Obligatorios", "Todos los campos son obligatorios, excepto la categoría y las notas.", Alert.AlertType.WARNING);
             return;
         }
 
         try {
+            // Validar que EAN13 sea un número válido
             long ean13 = Long.parseLong(ean13Text);
 
             Producto nuevoProducto = new Producto();
@@ -162,13 +164,15 @@ public class NuevoProductoController {
             nuevoProducto.setEan13((int) ean13);
             nuevoProducto.setKeyRFID(rfid);
 
+            // Asociar la categoría al producto solo si se seleccionó
             if (categoriaSeleccionada != null) {
                 Integer idCategoria = categoriasMap.get(categoriaSeleccionada);
                 Categoria categoria = new Categoria();
                 categoria.setId(idCategoria);
-                nuevoProducto.setCategoria(categoria); // Asociar categoría al producto
+                nuevoProducto.setCategoria(categoria);
             }
 
+            // Guardar el producto en la base de datos
             guardarEnBaseDatos(nuevoProducto);
 
             mostrarAlerta("Éxito", "Producto guardado exitosamente.", Alert.AlertType.INFORMATION);

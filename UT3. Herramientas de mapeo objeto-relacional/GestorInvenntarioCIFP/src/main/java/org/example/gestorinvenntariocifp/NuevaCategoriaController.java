@@ -2,6 +2,7 @@ package org.example.gestorinvenntariocifp;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
@@ -45,7 +46,6 @@ public class NuevaCategoriaController {
 
         try (SessionFactory sessionFactory = configuration.buildSessionFactory();
              Session session = sessionFactory.openSession()) {
-            // Verificar si ya existe una categoría con el mismo nombre
             List<Categoria> categoriasExistentes = session.createQuery("from Categoria", Categoria.class).list();
             for (Categoria categoria : categoriasExistentes) {
                 if (categoria.getNombre().equalsIgnoreCase(nombre)) {
@@ -54,7 +54,6 @@ public class NuevaCategoriaController {
                 }
             }
 
-            // Crear nueva categoría
             Categoria nuevaCategoria = new Categoria();
             nuevaCategoria.setNombre(nombre);
 
@@ -72,14 +71,17 @@ public class NuevaCategoriaController {
 
     private void volverACategorias() {
         try {
-            Stage stage = (Stage) btnCancelar.getScene().getWindow();
-            AnchorPane categoriasVista = FXMLLoader.load(getClass().getResource("categorias-view.fxml"));
-            stage.getScene().setRoot(categoriasVista);
+            Stage stage = (Stage) btnGuardar.getScene().getWindow(); // Recupera la ventana actual
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("categoria-view.fxml"));
+            Scene categoriaScene = new Scene(fxmlLoader.load(), 800, 600); // Dimensiones consistentes
+            stage.setScene(categoriaScene);
+            stage.centerOnScreen();
         } catch (Exception e) {
             mostrarError("No se pudo volver a la vista de categorías.");
             e.printStackTrace();
         }
     }
+
 
     private void mostrarError(String mensaje) {
         lblError.setText(mensaje);

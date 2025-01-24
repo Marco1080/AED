@@ -65,11 +65,10 @@ public class MarcajesController {
 
     @FXML
     public void initialize() {
-        // Configurar columnas
         colId.setCellValueFactory(new PropertyValueFactory<>("id"));
         colProducto.setCellValueFactory(cellData ->
                 javafx.beans.binding.Bindings.createObjectBinding(() ->
-                        cellData.getValue().getIdProducto().getDescripcion() // Solo el nombre del producto
+                        cellData.getValue().getIdProducto().getDescripcion()
                 )
         );
         colAula.setCellValueFactory(cellData ->

@@ -8,9 +8,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f8f9fa;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.gestorinvenntariocifp.CategoriaController">
+<AnchorPane prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: #f8f9fa;"
+            xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="org.example.gestorinvenntariocifp.CategoriaController">
 
-    <VBox alignment="CENTER" layoutX="50.0" layoutY="50.0" spacing="20.0" style="-fx-padding: 20; -fx-background-color: #ffffff; -fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
+    <VBox alignment="CENTER" spacing="20.0" style="-fx-padding: 20; -fx-background-color: white; -fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;"
+          AnchorPane.topAnchor="50.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
 
         <Label style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #495057;" text="Categorías disponibles" />
 
@@ -26,6 +29,8 @@
             <Button fx:id="btnVolverMenu" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Volver" />
             <Button fx:id="btnEliminarCategoria" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Eliminar" />
             <Button fx:id="btnActualizarCategoria" style="-fx-background-color: #ffc107; -fx-text-fill: #212529; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Actualizar" />
+            <Button fx:id="btnCrearCategoria" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Crear Categoría" />
         </HBox>
     </VBox>
 </AnchorPane>
+

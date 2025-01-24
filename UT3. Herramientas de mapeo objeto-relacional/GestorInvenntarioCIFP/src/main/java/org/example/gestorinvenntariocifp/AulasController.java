@@ -85,23 +85,27 @@ public class AulasController {
         try {
             Stage stage = (Stage) btnAtras.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("menu-view.fxml"));
-            Scene menuScene = new Scene(fxmlLoader.load());
+            Scene menuScene = new Scene(fxmlLoader.load(), 800, 600); // Dimensiones consistentes
             stage.setScene(menuScene);
+            stage.centerOnScreen();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+
     private void crearAula() {
         try {
             Stage stage = (Stage) tablaAulas.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("crear-aula-view.fxml"));
-            Scene crearScene = new Scene(fxmlLoader.load());
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("nuevaAula-view.fxml"));
+            Scene crearScene = new Scene(fxmlLoader.load(), 800, 600);
             stage.setScene(crearScene);
+            stage.centerOnScreen();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
 
     private void eliminarAulaSeleccionada() {
         Aula aulaSeleccionada = tablaAulas.getSelectionModel().getSelectedItem();
