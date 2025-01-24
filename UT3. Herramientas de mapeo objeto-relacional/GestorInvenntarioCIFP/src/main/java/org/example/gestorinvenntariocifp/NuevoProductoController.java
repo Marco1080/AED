@@ -149,14 +149,12 @@ public class NuevoProductoController {
         Integer cantidadStock = spinnerCantidad.getValue();
         Double precioUnitario = sliderPrecio.getValue();
 
-        // Validar los campos obligatorios (excepto categoría y notas)
         if (descripcion.isEmpty() || ean13Text.isEmpty() || rfid.isEmpty() || numeracionSeleccionada == null || cantidadStock == null || precioUnitario == null) {
             mostrarAlerta("Campos Obligatorios", "Todos los campos son obligatorios, excepto la categoría y las notas.", Alert.AlertType.WARNING);
             return;
         }
 
         try {
-            // Validar que EAN13 sea un número válido
             long ean13 = Long.parseLong(ean13Text);
 
             Producto nuevoProducto = new Producto();
@@ -164,7 +162,6 @@ public class NuevoProductoController {
             nuevoProducto.setEan13((int) ean13);
             nuevoProducto.setKeyRFID(rfid);
 
-            // Asociar la categoría al producto solo si se seleccionó
             if (categoriaSeleccionada != null) {
                 Integer idCategoria = categoriasMap.get(categoriaSeleccionada);
                 Categoria categoria = new Categoria();
@@ -172,7 +169,6 @@ public class NuevoProductoController {
                 nuevoProducto.setCategoria(categoria);
             }
 
-            // Guardar el producto en la base de datos
             guardarEnBaseDatos(nuevoProducto);
 
             mostrarAlerta("Éxito", "Producto guardado exitosamente.", Alert.AlertType.INFORMATION);

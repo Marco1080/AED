@@ -71,9 +71,9 @@ public class NuevaCategoriaController {
 
     private void volverACategorias() {
         try {
-            Stage stage = (Stage) btnGuardar.getScene().getWindow(); // Recupera la ventana actual
+            Stage stage = (Stage) btnGuardar.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("categoria-view.fxml"));
-            Scene categoriaScene = new Scene(fxmlLoader.load(), 800, 600); // Dimensiones consistentes
+            Scene categoriaScene = new Scene(fxmlLoader.load(), 800, 600);
             stage.setScene(categoriaScene);
             stage.centerOnScreen();
         } catch (Exception e) {

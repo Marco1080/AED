@@ -52,7 +52,7 @@ public class ProductosController {
     private Button btnEliminar;
 
     @FXML
-    private CheckBox chkSinCategoria; // Checkbox para filtrar productos sin categoría
+    private CheckBox chkSinCategoria;
 
     private ObservableList<Producto> productosObservableList = FXCollections.observableArrayList();
 
@@ -102,11 +102,11 @@ public class ProductosController {
     private void filtrarProductosSinCategoria() {
         if (chkSinCategoria.isSelected()) {
             List<Producto> sinCategoria = productosObservableList.stream()
-                    .filter(producto -> producto.getCategoria() == null) // Filtrar productos con categoría null
+                    .filter(producto -> producto.getCategoria() == null)
                     .collect(Collectors.toList());
             tablaProductos.setItems(FXCollections.observableArrayList(sinCategoria));
         } else {
-            tablaProductos.setItems(productosObservableList); // Restaurar todos los productos
+            tablaProductos.setItems(productosObservableList);
         }
     }
 

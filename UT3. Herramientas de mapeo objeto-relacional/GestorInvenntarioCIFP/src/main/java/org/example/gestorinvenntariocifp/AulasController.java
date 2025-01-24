@@ -85,7 +85,7 @@ public class AulasController {
         try {
             Stage stage = (Stage) btnAtras.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("menu-view.fxml"));
-            Scene menuScene = new Scene(fxmlLoader.load(), 800, 600); // Dimensiones consistentes
+            Scene menuScene = new Scene(fxmlLoader.load(), 800, 600);
             stage.setScene(menuScene);
             stage.centerOnScreen();
         } catch (IOException e) {
