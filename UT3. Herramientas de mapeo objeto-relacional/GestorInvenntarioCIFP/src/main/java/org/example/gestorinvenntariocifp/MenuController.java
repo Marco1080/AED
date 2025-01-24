@@ -47,11 +47,6 @@ public class MenuController {
 
     @FXML
     public void initialize() {
-        btnMarcajesProducto.setOnAction(event -> mostrarMarcajesProducto());
-        btnMarcajesProductoAula.setOnAction(event -> mostrarMarcajesProductoAula());
-        btnProductosSinCategoria.setOnAction(event -> mostrarCategorias());
-        btnSalir.setOnAction(event -> volverInicio());
-        btnAulas.setOnAction(event -> mostrarAulas());
 
         menuExportarPDF.setOnAction(event -> exportarAPDF());
         menuGuardar.setOnAction(event -> guardarCambios());
@@ -60,23 +55,23 @@ public class MenuController {
         menuAcercaDe.setOnAction(event -> mostrarAcercaDe());
         menuModoNocturno.setOnAction(event -> alternarModoNocturno());
     }
-
+    @FXML
     private void mostrarMarcajesProducto() {
         cargarVista("marcajes-view.fxml");
     }
-
+    @FXML
     private void mostrarMarcajesProductoAula() {
         cargarVista("productos-view.fxml");
     }
-
+    @FXML
     private void mostrarCategorias() {
         cargarVista("categoria-view.fxml");
     }
-
+    @FXML
     private void volverInicio() {
         cargarVista("inicio-view.fxml");
     }
-
+    @FXML
     private void mostrarAulas() {
         cargarVista("aulas-view.fxml");
     }
@@ -96,23 +91,23 @@ public class MenuController {
         }
     }
 
-
+    @FXML
     private void exportarAPDF() {
     }
-
+    @FXML
     private void guardarCambios() {
     }
-
+    @FXML
     private void salirAplicacion() {
         System.exit(0);
     }
-
+    @FXML
     private void mostrarVersionActual() {
     }
-
+    @FXML
     private void mostrarAcercaDe() {
     }
-
+    @FXML
     private void alternarModoNocturno() {
         if (menuModoNocturno.isSelected()) {
             vistaPrincipal.setStyle("-fx-background-color: #2b2b2b;");

@@ -18,21 +18,21 @@
         <menus>
             <Menu text="Archivo">
                 <items>
-                    <MenuItem fx:id="menuExportarPDF" text="Exportar a PDF" />
-                    <MenuItem fx:id="menuGuardar" text="Guardar" />
+                    <MenuItem fx:id="menuExportarPDF" text="Exportar a PDF" onAction="#exportarAPDF" />
+                    <MenuItem fx:id="menuGuardar" text="Guardar" onAction="#guardarCambios" />
                     <SeparatorMenuItem />
-                    <MenuItem fx:id="menuSalir" text="Salir" />
+                    <MenuItem fx:id="menuSalir" text="Salir" onAction="#salirAplicacion" />
                 </items>
             </Menu>
             <Menu text="Opciones">
                 <items>
-                    <CheckMenuItem fx:id="menuModoNocturno" text="Modo nocturno" />
+                    <CheckMenuItem fx:id="menuModoNocturno" text="Modo nocturno" onAction="#alternarModoNocturno" />
                 </items>
             </Menu>
             <Menu text="Ayuda">
                 <items>
-                    <MenuItem fx:id="menuVersionActual" text="Versión actual" />
-                    <MenuItem fx:id="menuAcercaDe" text="Soporte" />
+                    <MenuItem fx:id="menuVersionActual" text="Versión actual" onAction="#mostrarVersionActual" />
+                    <MenuItem fx:id="menuAcercaDe" text="Soporte" onAction="#mostrarAcercaDe" />
                 </items>
             </Menu>
         </menus>
@@ -42,10 +42,10 @@
             <Label style="-fx-font-size: 28; -fx-font-weight: bold; -fx-text-fill: #495057;" text="CIFP César Manrique" />
             <Label style="-fx-font-size: 16; -fx-text-fill: #6c757d;" text="\@2024-2025" />
             <GridPane alignment="CENTER" hgap="20" vgap="20">
-                <Button fx:id="btnMarcajesProducto" prefWidth="150.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Marcajes" GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                <Button fx:id="btnAulas" prefWidth="150.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Aulas" GridPane.columnIndex="1" GridPane.rowIndex="0" />
-                <Button fx:id="btnMarcajesProductoAula" prefWidth="150.0" style="-fx-background-color: #ffc107; -fx-text-fill: #212529; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Productos" GridPane.columnIndex="0" GridPane.rowIndex="1" />
-                <Button fx:id="btnProductosSinCategoria" prefWidth="150.0" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Categorías" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                <Button fx:id="btnMarcajesProducto" prefWidth="150.0" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Marcajes" GridPane.columnIndex="0" GridPane.rowIndex="0" onAction="#mostrarMarcajesProducto" />
+                <Button fx:id="btnAulas" prefWidth="150.0" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Aulas" GridPane.columnIndex="1" GridPane.rowIndex="0" onAction="#mostrarAulas" />
+                <Button fx:id="btnMarcajesProductoAula" prefWidth="150.0" style="-fx-background-color: #ffc107; -fx-text-fill: #212529; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Productos" GridPane.columnIndex="0" GridPane.rowIndex="1" onAction="#mostrarMarcajesProductoAula" />
+                <Button fx:id="btnProductosSinCategoria" prefWidth="150.0" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Categorías" GridPane.columnIndex="1" GridPane.rowIndex="1" onAction="#mostrarCategorias" />
                 <columnConstraints>
                     <ColumnConstraints />
                     <ColumnConstraints />
@@ -55,7 +55,7 @@
                     <RowConstraints />
                 </rowConstraints>
             </GridPane>
-            <Button fx:id="btnSalir" prefWidth="200.0" style="-fx-background-color: #17a2b8; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Guardar y salir" />
+            <Button fx:id="btnSalir" prefWidth="200.0" style="-fx-background-color: #17a2b8; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Guardar y salir" onAction="#volverInicio" />
         </VBox>
     </AnchorPane>
 </AnchorPane>

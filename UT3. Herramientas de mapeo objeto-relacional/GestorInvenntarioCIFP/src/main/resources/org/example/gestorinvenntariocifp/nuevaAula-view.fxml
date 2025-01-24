@@ -16,8 +16,8 @@
         <TextField fx:id="txtDescripcion" promptText="Descripción" style="-fx-background-color: #e9ecef; -fx-padding: 10; -fx-border-color: #ced4da; -fx-border-radius: 5;" />
         <TextField fx:id="txtIp" promptText="IP (Ej: 192.168.0.1)" style="-fx-background-color: #e9ecef; -fx-padding: 10; -fx-border-color: #ced4da; -fx-border-radius: 5;" />
         <HBox spacing="20.0" alignment="CENTER">
-            <Button fx:id="btnCancelar" text="Cancelar" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5;" />
-            <Button fx:id="btnGuardar" text="Guardar" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5;" />
+            <Button fx:id="btnCancelar" text="Cancelar"  onAction="#volverAAulas" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5;" />
+            <Button fx:id="btnGuardar" text="Guardar" onAction="#guardarAula" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14px; -fx-font-weight: bold; -fx-background-radius: 5;" />
         </HBox>
     </VBox>
 </AnchorPane>

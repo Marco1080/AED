@@ -65,7 +65,7 @@ public class AulasController {
         colDescripcion.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("descripcion"));
         colIp.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("ip"));
     }
-
+    @FXML
     private void cargarAulas() {
         aulasObservableList.clear();
         Configuration configuration = new Configuration().configure("hibernate.cfg.xml");
@@ -80,7 +80,7 @@ public class AulasController {
 
         tablaAulas.setItems(aulasObservableList);
     }
-
+    @FXML
     private void volverAlMenu() {
         try {
             Stage stage = (Stage) btnAtras.getScene().getWindow();
@@ -93,7 +93,7 @@ public class AulasController {
         }
     }
 
-
+    @FXML
     private void crearAula() {
         try {
             Stage stage = (Stage) tablaAulas.getScene().getWindow();
@@ -106,7 +106,7 @@ public class AulasController {
         }
     }
 
-
+    @FXML
     private void eliminarAulaSeleccionada() {
         Aula aulaSeleccionada = tablaAulas.getSelectionModel().getSelectedItem();
         if (aulaSeleccionada == null) {

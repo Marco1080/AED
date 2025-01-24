@@ -21,7 +21,7 @@
             <Button fx:id="btnAnadirProducto" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Añadir producto" />
             <Button fx:id="btnEliminar" style="-fx-background-color: #ffc107; -fx-text-fill: black; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Eliminar producto" />
         </HBox>
-        <CheckBox fx:id="chkSinCategoria" text="Solo sin categoría" style="-fx-font-size: 14; -fx-text-fill: #495057;" alignment="CENTER" VBox.vgrow="NEVER" />
+        <CheckBox fx:id="chkSinCategoria" text="Sin categoría" style="-fx-font-size: 14; -fx-text-fill: #495057;" alignment="CENTER" VBox.vgrow="NEVER" />
         <TableView fx:id="tablaProductos" style="-fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;"
                    VBox.vgrow="ALWAYS">
             <columns>

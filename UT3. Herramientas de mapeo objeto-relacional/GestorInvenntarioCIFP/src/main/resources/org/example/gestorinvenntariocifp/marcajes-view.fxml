@@ -23,11 +23,11 @@
             <Label style="-fx-font-size: 14; -fx-font-weight: bold;" text="Hasta:" GridPane.columnIndex="2" GridPane.rowIndex="1" />
             <DatePicker fx:id="dateHasta" GridPane.columnIndex="3" GridPane.rowIndex="1" />
             <HBox alignment="CENTER" spacing="10" GridPane.columnIndex="1" GridPane.rowIndex="2">
-                <Button fx:id="btnBuscar" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar" />
-                <Button fx:id="btnNuevoMarcaje" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Nuevo marcaje" />
+                <Button fx:id="btnBuscar" onAction="#handleBuscar" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Buscar" />
+                <Button fx:id="btnNuevoMarcaje" onAction="#handleNuevoMarcaje" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Nuevo marcaje" />
             </HBox>
-            <Button fx:id="btnEliminar" style="-fx-background-color: #ffc107; -fx-text-fill: black; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Eliminar marcaje" GridPane.columnIndex="3" GridPane.rowIndex="2" />
-            <Button fx:id="btnAtras" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Atrás" GridPane.rowIndex="2" />
+            <Button fx:id="btnEliminar" onAction="#handleEliminar" style="-fx-background-color: #ffc107; -fx-text-fill: black; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Eliminar marcaje" GridPane.columnIndex="3" GridPane.rowIndex="2" />
+            <Button fx:id="btnAtras" onAction="#handleAtras" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5;" text="Atrás" GridPane.rowIndex="2" />
         </GridPane>
 
         <TableView fx:id="tablaMarcajes" style="-fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">

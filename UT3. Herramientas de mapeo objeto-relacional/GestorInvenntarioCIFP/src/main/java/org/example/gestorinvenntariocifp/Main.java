@@ -16,7 +16,7 @@ public class Main {
 
         try (SessionFactory sessionFactory = configuration.buildSessionFactory()) {
             try (Session session = sessionFactory.openSession()) {
-                System.out.println("Conexión exitosa con la base de datos.");
+                System.out.println("Inicio prueba<---.");
 
                 session.beginTransaction();
 
@@ -41,5 +41,6 @@ public class Main {
             System.err.println("Error al conectar con la base de datos: " + e.getMessage());
             e.printStackTrace();
         }
+        System.out.println("Fin de la prueba<---.");
     }
 }

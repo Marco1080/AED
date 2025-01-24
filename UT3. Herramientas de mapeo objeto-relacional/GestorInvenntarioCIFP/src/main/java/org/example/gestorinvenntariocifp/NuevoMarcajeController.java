@@ -2,13 +2,10 @@ package org.example.gestorinvenntariocifp;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.example.gestorinvenntariocifp.modelos.Aula;
 import org.example.gestorinvenntariocifp.modelos.Marcaje;
@@ -31,13 +28,18 @@ public class NuevoMarcajeController {
     private ComboBox<String> aulaComboBox;
 
     @FXML
-    private ComboBox<String> tipoComboBox;
+    private RadioButton entradaRadioButton;
+
+    @FXML
+    private RadioButton salidaRadioButton;
 
     @FXML
     private Label feedbackLabel;
 
+    private ToggleGroup tipoMarcajeGroup;
     private SessionFactory sessionFactory;
 
+    @FXML
     public void initialize() {
         sessionFactory = new Configuration()
                 .configure()
@@ -48,10 +50,13 @@ public class NuevoMarcajeController {
 
         ObservableList<String> productos = FXCollections.observableArrayList(getProductosFromDB());
         ObservableList<String> aulas = FXCollections.observableArrayList(getAulasFromDB());
-        ObservableList<String> tipos = FXCollections.observableArrayList("Entrada", "Salida");
         productoComboBox.setItems(productos);
         aulaComboBox.setItems(aulas);
-        tipoComboBox.setItems(tipos);
+
+        tipoMarcajeGroup = new ToggleGroup();
+        entradaRadioButton.setToggleGroup(tipoMarcajeGroup);
+        salidaRadioButton.setToggleGroup(tipoMarcajeGroup);
+        entradaRadioButton.setSelected(true);
     }
 
     private List<String> getProductosFromDB() {
@@ -75,12 +80,12 @@ public class NuevoMarcajeController {
     }
 
     @FXML
-    public void handleCrearMarcaje(ActionEvent event) {
+    public void handleCrearMarcaje() {
         String productoSeleccionado = productoComboBox.getValue();
         String aulaSeleccionada = aulaComboBox.getValue();
-        String tipoSeleccionado = tipoComboBox.getValue();
+        RadioButton selectedTipo = (RadioButton) tipoMarcajeGroup.getSelectedToggle();
 
-        if (productoSeleccionado == null || aulaSeleccionada == null || tipoSeleccionado == null) {
+        if (productoSeleccionado == null || aulaSeleccionada == null || selectedTipo == null) {
             feedbackLabel.setText("Por favor, completa todos los campos.");
             feedbackLabel.setStyle("-fx-text-fill: red;");
             return;
@@ -97,6 +102,11 @@ public class NuevoMarcajeController {
                 feedbackLabel.setStyle("-fx-text-fill: red;");
                 return;
             }
+            if (productos.size() > 1) {
+                feedbackLabel.setText("Más de un producto encontrado con esa descripción. Por favor, verifica.");
+                feedbackLabel.setStyle("-fx-text-fill: red;");
+                return;
+            }
             Producto producto = productos.get(0);
 
             List<Aula> aulas = session.createQuery("FROM Aula WHERE descripcion = :desc", Aula.class)
@@ -107,12 +117,17 @@ public class NuevoMarcajeController {
                 feedbackLabel.setStyle("-fx-text-fill: red;");
                 return;
             }
+            if (aulas.size() > 1) {
+                feedbackLabel.setText("Más de un aula encontrada con esa descripción. Por favor, verifica.");
+                feedbackLabel.setStyle("-fx-text-fill: red;");
+                return;
+            }
             Aula aula = aulas.get(0);
 
             Marcaje marcaje = new Marcaje();
             marcaje.setIdProducto(producto);
             marcaje.setIdAula(aula);
-            marcaje.setTipo(tipoSeleccionado.equals("Entrada") ? 1 : 2);
+            marcaje.setTipo(selectedTipo.getText().equals("Entrada") ? 1 : 2);
             marcaje.setTimeStamp(Instant.now());
 
             session.persist(marcaje);
@@ -120,7 +135,6 @@ public class NuevoMarcajeController {
 
             feedbackLabel.setText("Marcaje guardado correctamente.");
             feedbackLabel.setStyle("-fx-text-fill: green;");
-
             redirectToMarcajes();
         } catch (Exception e) {
             e.printStackTrace();
@@ -129,12 +143,18 @@ public class NuevoMarcajeController {
         }
     }
 
+
+    @FXML
+    public void handleCancelar() {
+        redirectToMarcajes();
+    }
+
     private void redirectToMarcajes() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/org/example/gestorinvenntariocifp/marcajes-view.fxml"));
-            Parent root = loader.load();
+            Scene scene = new Scene(loader.load());
             Stage stage = (Stage) feedbackLabel.getScene().getWindow();
-            stage.setScene(new Scene(root));
+            stage.setScene(scene);
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();

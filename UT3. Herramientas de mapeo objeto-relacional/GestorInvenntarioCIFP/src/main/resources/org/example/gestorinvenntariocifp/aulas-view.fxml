@@ -15,10 +15,10 @@
           AnchorPane.topAnchor="50.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
         <Label style="-fx-font-size: 24; -fx-font-weight: bold; -fx-text-fill: #495057;" text="Aulas" />
         <HBox alignment="CENTER" spacing="20.0" style="-fx-padding: 10;">
-            <Button fx:id="btnAtras" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Atrás" />
-            <Button fx:id="btnRecargar" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Recargar aulas" />
-            <Button fx:id="btnCrear" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Crear aula" />
-            <Button fx:id="btnEliminar" style="-fx-background-color: #ffc107; -fx-text-fill: black; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Eliminar aula" />
+            <Button fx:id="btnAtras" onAction="#volverAlMenu" style="-fx-background-color: #dc3545; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Atrás" />
+            <Button fx:id="btnRecargar" style="-fx-background-color: #007bff; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Editar" />
+            <Button fx:id="btnCrear" onAction="#crearAula" style="-fx-background-color: #28a745; -fx-text-fill: white; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Crear aula" />
+            <Button fx:id="btnEliminar" onAction="#eliminarAulaSeleccionada" style="-fx-background-color: #ffc107; -fx-text-fill: black; -fx-font-size: 14; -fx-font-weight: bold; -fx-background-radius: 5; -fx-padding: 10;" text="Eliminar aula" />
         </HBox>
         <TableView fx:id="tablaAulas" prefHeight="400.0" prefWidth="700.0" style="-fx-border-color: #ced4da; -fx-border-width: 1; -fx-border-radius: 8; -fx-background-radius: 8;">
             <columns>

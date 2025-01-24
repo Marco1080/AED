@@ -35,10 +35,9 @@ public class NuevaAulaController {
 
     @FXML
     public void initialize() {
-        btnGuardar.setOnAction(event -> guardarAula());
-        btnCancelar.setOnAction(event -> volverAAulas());
-    }
 
+    }
+    @FXML
     private void guardarAula() {
         String numeracion = txtNumeracion.getText().trim();
         String descripcion = txtDescripcion.getText().trim();
@@ -86,7 +85,7 @@ public class NuevaAulaController {
             e.printStackTrace();
         }
     }
-
+    @FXML
     private void volverAAulas() {
         try {
             Stage stage = (Stage) btnCancelar.getScene().getWindow();
